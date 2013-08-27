@@ -43,9 +43,11 @@ class project{
     }
 
     function save($project){
+        $file_to_save = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'projects' . DIRECTORY_SEPARATOR . $this->config('file', $project);
         if(isset($this->projects[$project])){
+            mkdir(dirname($file_to_save), 0777, TRUE);
             file_put_contents(
-                __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'projects' . DIRECTORY_SEPARATOR . $this->config('file', $project),
+                $file_to_save,
                 json_encode($this->projects[$project], JSON_PRETTY_PRINT));
             $this->getAll();
             return true;
