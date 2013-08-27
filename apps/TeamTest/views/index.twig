@@ -1,0 +1,282 @@
+<html>
+    <head>
+        <title>TeamTest</title>
+        <link href='http://fonts.googleapis.com/css?family=Marcellus+SC' rel='stylesheet' type='text/css'>
+        <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    </head>
+    <body ng-app="TeamTest">
+    <style>
+        html,
+        body {
+            margin:0px;
+            padding:0px;
+            height:100%;
+            width:100%;
+            background-image:url("/images/tt/teamtest-logo.png");
+            background-repeat:no-repeat;
+            background-attachment:fixed;
+            background-position:center;
+        }
+        .container {
+            min-height:100%;
+            position:relative;
+        }
+        .header {
+            padding:10px 10px 10px 15px;
+        }
+        .body {
+            padding:0px 0px 0px 0px;
+        }
+        .footer {
+            position:absolute;
+            bottom:0;
+            height:60px;
+            width:100%;
+        }
+        .footer > .copyright{
+            width:500px;
+            text-align:center;
+            margin-top:20px;
+        }
+        .tools {
+            margin-top:5px;
+        }
+        .tools > i{
+            padding-right:10px;
+            cursor:pointer;
+        }
+        .button {
+            display:inline-block;
+            padding:5px 20px 5px 20px;
+            cursor:pointer;
+        }
+        .custom-font{
+            font-family: 'Marcellus SC', serif;
+        }
+        .pull-right{
+            float:right;
+        }
+        .pull-left{
+            float:left;
+        }
+        .centered{
+            margin-left:auto;
+            margin-right:auto;
+        }
+        .green-font{
+            color:#A5D029;
+        }
+        .white-font{
+            color:white;
+        }
+        .grey-font{
+            color:#515253;
+        }
+        .orange-font{
+            color:#FCA629;
+        }
+        .orange-bg{
+            background-color:#FCA629;
+        }
+        .green-bg{
+            background-color:#A5D029;
+        }
+        .grey-bg{
+            background-color:#515253;
+        }
+        .white-bg{
+            background-color:white;
+        }
+        .rounded-corners{
+            -moz-border-radius: 2px;
+            border-radius: 2px;
+        }
+        .test-tab{
+            height:25px;
+            transform: skew(-20deg);
+            -o-transform: skew(-20deg);
+            -moz-transform: skew(-20deg);
+            -webkit-transform: skew(-20deg);
+            display:inline-block;
+            padding:4px 15px 0px 15px;
+            float:left;
+            margin-right:3px;
+            font-family: 'Marcellus SC', serif;
+            color:white;
+        }
+        .test-tab:hover{
+            cursor:pointer;
+            opacity:.8;
+        }
+        .test-tab > .close{
+            font-size:10px;
+            margin-right:-12px;
+            margin-top:-3px;
+        }
+        .test-pass{
+            background-color:#A5D029;
+        }
+        .test-fail{
+            background-color:#FCA629;
+        }
+        .test-unknown{
+            background-color:white;
+            opacity:.3;
+            color:black;
+        }
+        .add-test{
+            margin-left:10px;
+            font-size:20px;
+            margin-top:5px;
+            cursor:pointer;
+        }
+        .file-list{
+            width:100%;
+        }
+        .file-list > .search{
+            height:40px;
+        }
+        .file-list > .search > i{
+            margin-top:-5px;
+            font-size: 30px;
+            padding:10px;
+            float:left;
+
+        }
+        .file-list > .search > input{
+            font-size:20px;
+            color:#515253;
+            background:none;
+            border:0px;
+            padding:10px;
+            outline: none;
+            width:50%;
+            margin:0px;
+        }
+        .file-list > .file{
+            background-color:#515253;
+            border-bottom:1px solid #A5D029;
+            padding:10px;
+            cursor:pointer;
+        }
+
+        .file-list > .file:hover{
+            background-color:#A5D029;
+            border-bottom:1px solid #FCA629;
+        }
+
+        .file-list > .search > .cancel{
+            font-size:20px;
+            padding:10px;
+            cursor:pointer;
+        }
+
+        .modal{
+            height:100%;
+            width:100%;
+            position:fixed;
+            top:0;
+            left:0;
+            background-color:rgba(0, 0, 0, 0.6);
+            color:black;
+            font-size:25px;
+        }
+        .projects{
+            height:40px;
+        }
+        .projects > span{
+            float:left;
+            margin-top:10px;
+            padding-right:10px;
+        }
+        .projects > .project{
+            float:left;
+            padding:10px;
+            cursor:pointer;
+            border-left:1px solid white;
+        }
+        .projects > .project:hover{
+            background-color:#FCA629;
+        }
+
+        .settings{
+            width:100%;
+        }
+        .settings > .config{
+            padding:10px;
+        }
+        .settings > .config > input{
+            font-size:20px;
+        }
+        .settings > .button{
+            margin-top:31px;
+        }
+
+    </style>
+    <div class="container">
+        <div class="header grey-bg" ng-controller="masterCtrl" ng-show="states.ready">
+            <div class="test-tab test-{[{test.state}]}" ng-repeat="test in projects.selected.tests">
+                {[{test.info.basename}]}<span class="close pull-right cancel grey-font" ng-click="delete(test)">&#10006;</span>
+            </div>
+            <i class="pull-left icon-plus add-test orange-font" ng-click="addTest()"></i>
+            <div class="pull-right tools green-font">
+                <i class="icon-trophy" style="cursor:no-drop"></i><i class="icon-wrench"></i><i class="icon-cogs" ng-click="states.settings = !states.settings"></i>
+            </div>
+            <div style="clear:both"></div>
+        </div>
+        <div class="file-list" ng-controller="filesCtrl" ng-show="states.file_list">
+            <div class="search orange-bg custom-font grey-font">
+                <i class="icon-file grey-font"></i> <input type="text" ng-change="search()" ng-model="query" ng-focus="states.file_list">{[{states.file_text}]}
+                <span class="pull-right cancel grey-font" ng-click="cancel()">&#10006;</span>
+            </div>
+            <div ng-repeat="file in files" class="file custom-font" ng-click="addTest(file)">
+                {[{file}]}
+            </div>
+            <div style="clear:both;background-color:pink;"></div>
+        </div>
+        <div ng-controller="projectCtrl" ng-show="states.projects">
+            <div class="projects pull-right">
+                <span class="custom-font grey-font">Projects:</span>
+                <div class="project custom-font" ng-repeat="project in projects.all" ng-click="selectProject(project)" ng-class="{'grey-bg': projects.selected.file == project.file,'white-font': projects.selected.file == project.file, 'green-bg': projects.selected.file != project.file}">
+                    {[{project.name}]}
+                </div>
+                <div class="project custom-font grey-bg white-font" ng-show="projects.all.length == 0">
+                    New Project
+                </div>
+            </div>
+            <div style="clear:both"></div>
+            <div style="clear:both"></div>
+            <div style="clear:both"></div>
+            <div class="settings grey-bg white-font" ng-show="states.settings" ng-controller="settingsCtrl">
+                <div class="config pull-left">
+                    <span class="orange-font custom-font">Project Name: </span>
+                    <br/>
+                    <input type="text" ng-model="p_name">
+                </div>
+                <div class="config pull-left">
+                    <span class="orange-font custom-font">Project BasePath: </span>
+                    <br/>
+                    <input type="text" ng-model="p_basepath">
+                </div>
+                <div class="button green-bg grey-font rounded-corners custom-font" ng-click="save()">
+                    Save
+                </div>
+                <div style="clear:both"></div>
+            </div>
+        </div>
+        </div>
+        <div style="clear:both"></div>
+        <div class="body"></div>
+        <div class="footer grey-bg white-font custom-font">
+            <div class="centered copyright custom-font green-font">
+                <span class="orange-font custom-font">n/a</span>&nbsp;<span class="white-font">Tests</span> |
+                <span class="orange-font custom-font">n/a</span>&nbsp;<span class="white-font">Assertsions</span> |
+                <span class="orange-font custom-font">n/a</span>&nbsp;<span class="white-font">Failuress</span>
+            </div>
+        </div>
+    </div>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.1/underscore-min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+    <script src="/js/tt/app.js"></script>
+    </body>
+</html>
