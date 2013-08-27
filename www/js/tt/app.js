@@ -65,14 +65,14 @@ tt.factory('projects', function ($http, states) {
         all: {},
         fetchAll: function () {
             var self = this;
-            $http({method: 'GET', url: '/project/all'})
+            $http({method: 'GET', url: '/index.php/project/all'})
                 .success(function (data) {
                     self.all = data;
                     self.selected = _.findWhere(self.all, {file: self.selected.file})
                     if(!_.size(self.all)){
                         states.settings = true;
                     }
-                    if(_.size(self.all) >= 1 && self.selected == undefined){
+                    if(_.size(self.all) >= 1 && !_.size(self.selected)){
                         for(var key in self.all)
                         self.selected = self.all[key];
                         states.ready = true;
@@ -80,8 +80,9 @@ tt.factory('projects', function ($http, states) {
                 });
         },
         addTest: function (file) {
+            console.log('Trying to addTest: ', file);
             var self = this;
-            $http({method: 'POST', data: {'test': file}, url: '/project/test/' + self.selected.file})
+            $http({method: 'POST', data: {'test': file}, url: '/index.php/project/test/' + self.selected.file})
                 .error(function (data) {
                 })
                 .success(function (data) {
@@ -90,14 +91,14 @@ tt.factory('projects', function ($http, states) {
         },
         deleteTest: function (test) {
             var self = this;
-            $http({method: 'DELETE', url: '/project/test/' + self.selected.file + '/' + test._id})
+            $http({method: 'DELETE', url: '/index.php/project/test/' + self.selected.file + '/' + test._id})
                 .success(function (data) {
                     self.fetchAll();
                 });
         },
         create: function(name,basepath){
             var self = this;
-            $http({method: 'POST', data: {'name':name, 'basepath':basepath}, url: '/project'})
+            $http({method: 'POST', data: {'name':name, 'basepath':basepath}, url: '/index.php/project'})
                 .success(function (data) {
                     self.fetchAll();
                 });
@@ -147,7 +148,7 @@ function filesCtrl($scope, $http, states, projects) {
             $scope.states.file_text = '';
             return true;
         }
-        $http({method: 'GET', url: '/files/' + encodeURIComponent($scope.query.replace('/', '[[..........]]')) + '/' + $scope.projects.selected.file})
+        $http({method: 'GET', url: '/index.php/files/' + encodeURIComponent($scope.query.replace('/', '[[..........]]')) + '/' + $scope.projects.selected.file})
             .error(function (data) {
                 $scope.states.file_text = "Your basepath cannot be found, please update " + $scope.projects.selected.file;
             })
