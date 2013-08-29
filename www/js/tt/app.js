@@ -61,20 +61,22 @@ tt.factory('states', function () {
 
 tt.factory('projects', function ($http, states) {
     return {
-        selected: {},
+        selected: undefined,
         all: {},
         fetchAll: function () {
             var self = this;
             $http({method: 'GET', url: '/index.php/project/all'})
                 .success(function (data) {
                     self.all = data;
-                    self.selected = _.findWhere(self.all, {file: self.selected.file})
-                    if(!_.size(self.all)){
+                    if (self.selected != undefined) {
+                        self.selected = _.findWhere(self.all, {file: self.selected.file})
+                    }
+                    if (!_.size(self.all)) {
                         states.settings = true;
                     }
-                    if(_.size(self.all) >= 1 && !_.size(self.selected)){
-                        for(var key in self.all)
-                        self.selected = self.all[key];
+                    if (_.size(self.all) >= 1 && !_.size(self.selected)) {
+                        for (var key in self.all)
+                            self.selected = self.all[key];
                         states.ready = true;
                     }
                 });
@@ -96,9 +98,9 @@ tt.factory('projects', function ($http, states) {
                     self.fetchAll();
                 });
         },
-        create: function(name,basepath){
+        create: function (name, basepath) {
             var self = this;
-            $http({method: 'POST', data: {'name':name, 'basepath':basepath}, url: '/index.php/project'})
+            $http({method: 'POST', data: {'name': name, 'basepath': basepath}, url: '/index.php/project'})
                 .success(function (data) {
                     self.fetchAll();
                 });
@@ -106,9 +108,12 @@ tt.factory('projects', function ($http, states) {
     }
 });
 
-function masterCtrl($scope, $http, states, projects) {
+function masterCtrl($scope, $http, $timeout, states, projects) {
     $scope.states = states;
     $scope.projects = projects;
+    $scope.epoch_time = 0;
+    $scope.every = 2000;
+
     $scope.addTest = function () {
         $scope.states.file_list = true;
         $scope.states.projects = false;
@@ -116,7 +121,32 @@ function masterCtrl($scope, $http, states, projects) {
 
     $scope.delete = function (test) {
         $scope.projects.deleteTest(test);
+    };
+
+    $scope.runTests = function () {
+        console.log('Running tests', $scope.projects.selected.tests);
+        _.each($scope.projects.selected.tests, function (test, idx) {
+            $scope.projects.selected.tests[idx].state = 'running';
+        })
     }
+
+    $scope.poll = function (epoch_time) {
+        if ($scope.projects.selected == undefined) {
+            $timeout($scope.poll, $scope.every);
+        } else {
+            /** only run this if there is a project selected **/
+            $http({method: 'GET', url: '/index.php/files/modified/' + epoch_time + '/' + $scope.projects.selected.name})
+                .success(function (data) {
+                    if (data.modified) {
+                        $scope.runTests();
+                    }
+                    $timeout(function () {
+                        $scope.poll(data.time);
+                    }, $scope.every);
+                });
+        }
+    };
+    $scope.poll($scope.epoch_time);
 }
 
 function projectCtrl($scope, $http, states, projects) {
@@ -178,7 +208,7 @@ function settingsCtrl($scope, $http, states, projects) {
     $scope.p_name = "";
     $scope.p_basepath = "";
 
-    $scope.save = function(){
+    $scope.save = function () {
         projects.create($scope.p_name, $scope.p_basepath);
         states.settings = false;
     }

@@ -26,8 +26,6 @@ class project{
 
     function create($name, $basepath){
         $project = array(
-            'python'=>'',
-            'php'=>'',
             'basepath'=>$basepath,
             'name'=>$name,
             'file'=>$this->filename($name) . '.json'
@@ -63,7 +61,8 @@ class project{
         return $this->add(array(
             'info'=>pathinfo($what),
             '_id'=>uniqid(),
-            'state'=>'unknown'
+            'state'=>'unknown',
+            'path'=>$what
         ), 'tests', $project);
     }
 

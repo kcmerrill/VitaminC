@@ -7,12 +7,9 @@ class files{
         if(!is_dir($basepath)){
             return false;
         }
-
-        echo $basepath;die();
-
-        $iterator = new RecursiveDirectoryIterator($basepath);
+        $iterator = new \RecursiveDirectoryIterator($basepath);
         $files = array();
-        foreach (new RecursiveIteratorIterator($iterator) as $fileinfo) {
+        foreach (new \RecursiveIteratorIterator($iterator) as $fileinfo) {
             if($callback($fileinfo, $query)){
                 $files[] = $fileinfo->getPathname();
             }
