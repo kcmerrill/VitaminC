@@ -5,4 +5,4 @@ composer*
 core/
 vendor/
 www/index.php
-apps/TeamTest/projects/*
+apps/TeamTest/data/*

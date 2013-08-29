@@ -17,7 +17,7 @@ class project{
      */
     function getAll(){
         $projects = array();
-        foreach (glob(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'projects' . DIRECTORY_SEPARATOR . '*.json') as $project) {
+        foreach (glob(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'projects' . DIRECTORY_SEPARATOR . '*.json') as $project) {
             $project_json = json_decode(file_get_contents($project), true);
             $projects[$project_json['file']] = $project_json;
         }
@@ -26,6 +26,8 @@ class project{
 
     function create($name, $basepath){
         $project = array(
+            'python'=>'',
+            'php'=>'',
             'basepath'=>$basepath,
             'name'=>$name,
             'file'=>$this->filename($name) . '.json'
@@ -43,9 +45,11 @@ class project{
     }
 
     function save($project){
-        $file_to_save = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'projects' . DIRECTORY_SEPARATOR . $this->config('file', $project);
+        $file_to_save = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'projects' . DIRECTORY_SEPARATOR . $this->config('file', $project);
         if(isset($this->projects[$project])){
-            mkdir(dirname($file_to_save), 0777, TRUE);
+            if(!is_dir(dirname($file_to_save))){
+                mkdir(dirname($file_to_save), 0777, TRUE);
+            }
             file_put_contents(
                 $file_to_save,
                 json_encode($this->projects[$project], JSON_PRETTY_PRINT));

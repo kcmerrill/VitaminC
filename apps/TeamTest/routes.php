@@ -28,17 +28,11 @@ $app->delete('/project/test/{project}/{test}', function($project, $test, Request
 });
 
 $app->get('/files/{query}/{project}', function($query, $project) use($app){
-    if(!is_dir($app['project']->config('basepath', $project))){
-        return $app->json(array(), 500);
-    }
-    /** forward slash hack */
-    $query = str_replace('[[..........]]','/', $query);
-    $iterator = new RecursiveDirectoryIterator($app['project']->config('basepath', $project, __DIR__));
-    $files = array();
-    foreach (new RecursiveIteratorIterator($iterator) as $fileinfo) {
-        if(stristr($fileinfo, $query) && !$fileinfo->isDir()){
-            $files[] = str_replace($app['project']->config('basepath', $project, ''), '', $fileinfo->getPathname());
-        }
-    }
-    return $app->json($files, 200);
+    $files = $app['files']->query($this->app['project']->config('basepath', $project, __DIR__), $query, function($fileinfo, $query){
+        return stristr($fileinfo, $query) && !$fileinfo->isDir();
+    });
+
+    die('finished');
+
+    return $app->json(is_array($files) ? $files : array(), is_array($files) ? 200 : 404);
 });
