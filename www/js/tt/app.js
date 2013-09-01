@@ -44,9 +44,9 @@ var tt = angular.module('TeamTest', [], function ($httpProvider) {
         return angular.isObject(data) && String(data) !== '[object File]' ? param(data) : data;
     }];
 })
-    .config(function ($interpolateProvider) {
-        $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
-    });
+.config(function ($interpolateProvider) {
+    $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
+});
 
 tt.factory('states', function () {
     return {
@@ -118,6 +118,7 @@ tt.factory('projects', function ($http, $timeout, states) {
                     self.selected.tests[id].last = data;
                     if(data.status != 'pass'){
                         states.content = data.raw;
+                        //states.content = data.cmd;
                     }
                 });
         },
