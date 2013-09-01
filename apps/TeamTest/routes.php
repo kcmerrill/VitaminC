@@ -31,10 +31,14 @@ $app->get('/files/modified/{query}/{project}', function($query, $project) use($a
     $files = $app['files']->query($app['project']->config('basepath', $project, __DIR__), $query, function($fileinfo, $query){
         return $fileinfo->getMTime() >= $query && !$fileinfo->isDir();
     },1);
-    return $app->json(array('time'=>time(),'query'=>$query, 'files'=>$files, 'modified'=>count($files) ? true : false), 200);
+    return $app->json(array('time'=>time(),'query'=>$query, 'files'=>$files, 'basepath'=>$app['project']->config('basepath', $project, __DIR__),'modified'=>count($files) ? true : false), 200);
 });
 
-
+$app->post('test', function(Request $request) use ($app){
+    $post = $request->request->all();
+    $results = $app['runner']->test($post['file']);
+    return $app->json($results, 200);
+});
 
 $app->get('/files/{query}/{project}', function($query, $project) use($app){
     $files = $app['files']->query($app['project']->config('basepath', $project, __DIR__), $query, function($fileinfo, $query){

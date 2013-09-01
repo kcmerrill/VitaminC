@@ -8,3 +8,7 @@ $app['project'] = $app->share(function(){
 $app['files'] = $app->share(function(){
     return new teamtest\models\files;
 });
+
+$app['runner'] = $app->share(function(){
+    return new teamtest\models\runner;
+});

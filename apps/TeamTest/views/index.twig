@@ -25,7 +25,7 @@
             padding:10px 10px 10px 15px;
         }
         .body {
-            padding:0px 0px 0px 0px;
+            padding:0px 0px 0px 10px;
         }
         .footer {
             position:absolute;
@@ -220,7 +220,7 @@
     </style>
     <div class="container">
         <div class="header grey-bg" ng-controller="masterCtrl" ng-show="states.ready">
-            <div class="test-tab test-{[{test.state}]}" ng-repeat="test in projects.selected.tests">
+            <div class="test-tab test-{[{test.state}]}" ng-repeat="test in projects.selected.tests" ng-click="showOutput(test)">
                 {[{test.info.basename}]}<span class="close pull-right cancel grey-font" ng-click="delete(test)">&#10006;</span>
             </div>
             <i class="pull-left icon-plus add-test orange-font" ng-click="addTest()"></i>
@@ -269,9 +269,11 @@
                 <div style="clear:both"></div>
             </div>
         </div>
+        <div style="clear:both"></div>
+        <div class="body" ng-controller="masterCtrl">
+            <pre>{[{states.content}]}</pre>
         </div>
         <div style="clear:both"></div>
-        <div class="body"></div>
         <div class="footer grey-bg white-font custom-font">
             <div class="centered copyright custom-font green-font">
                 <span class="orange-font custom-font">n/a</span>&nbsp;<span class="white-font">Tests</span> |

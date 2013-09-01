@@ -1,0 +1,9 @@
+{
+    "filetypes":["php"],
+    "scratch": "php",
+    "test": {
+        "cmd":"phpunit",
+        "pass":"(OK)(\\s+)(\\()",
+        "fail": "(FAILURES)(!)"
+    }
+}

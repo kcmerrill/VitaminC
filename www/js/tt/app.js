@@ -38,7 +38,6 @@ var tt = angular.module('TeamTest', [], function ($httpProvider) {
                     query += encodeURIComponent(name) + '=' + encodeURIComponent(value) + '&';
                 }
             }
-
             return query.length ? query.substr(0, query.length - 1) : query;
         };
 
@@ -48,6 +47,7 @@ var tt = angular.module('TeamTest', [], function ($httpProvider) {
     .config(function ($interpolateProvider) {
         $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
     });
+
 tt.factory('states', function () {
     return {
         "file_list": false,
@@ -55,13 +55,16 @@ tt.factory('states', function () {
         "ready": false,
         "projects": true,
         "file_text": '',
-        "settings": false
+        "settings": false,
+        "content":""
     }
 });
 
-tt.factory('projects', function ($http, states) {
+tt.factory('projects', function ($http, $timeout, states) {
     return {
+        every: 2000,
         selected: undefined,
+        last_modified:0,
         all: {},
         fetchAll: function () {
             var self = this;
@@ -82,7 +85,6 @@ tt.factory('projects', function ($http, states) {
                 });
         },
         addTest: function (file) {
-            console.log('Trying to addTest: ', file);
             var self = this;
             $http({method: 'POST', data: {'test': file}, url: '/index.php/project/test/' + self.selected.file})
                 .error(function (data) {
@@ -94,6 +96,9 @@ tt.factory('projects', function ($http, states) {
         deleteTest: function (test) {
             var self = this;
             $http({method: 'DELETE', url: '/index.php/project/test/' + self.selected.file + '/' + test._id})
+                .error(function(data){
+
+                })
                 .success(function (data) {
                     self.fetchAll();
                 });
@@ -104,6 +109,46 @@ tt.factory('projects', function ($http, states) {
                 .success(function (data) {
                     self.fetchAll();
                 });
+        },
+        testRunner: function (id) {
+            var self = this;
+            $http({method: 'POST', data: {'file':self.selected.tests[id].path }, url: '/index.php/test'})
+                .success(function (data) {
+                    self.selected.tests[id].state = data.status;
+                    self.selected.tests[id].last = data;
+                    if(data.status != 'pass'){
+                        states.content = data.raw;
+                    }
+                });
+        },
+        runTests: function () {
+            var self = this;
+            _.each(self.selected.tests, function (test, idx) {
+                if (self.selected.tests[idx].state != 'running') {
+                    self.selected.tests[idx].state = 'running';
+                    self.testRunner(idx);
+                }
+            });
+        },
+        poll: function (epoch_time) {
+            var self = this;
+            if (self.selected == undefined) {
+                $timeout(function () {
+                    self.poll(self.last_modified);
+                }, self.every);
+            } else {
+                /** only run this if there is a project selected **/
+                $http({method: 'GET', url: '/index.php/files/modified/' + epoch_time + '/' + self.selected.file})
+                    .success(function (data) {
+                        self.last_modfied = data.modified;
+                        if (data.modified) {
+                            self.runTests();
+                        }
+                        $timeout(function () {
+                            self.poll(data.time);
+                        }, self.every);
+                });
+            }
         }
     }
 });
@@ -111,42 +156,18 @@ tt.factory('projects', function ($http, states) {
 function masterCtrl($scope, $http, $timeout, states, projects) {
     $scope.states = states;
     $scope.projects = projects;
-    $scope.epoch_time = 0;
-    $scope.every = 2000;
-
     $scope.addTest = function () {
         $scope.states.file_list = true;
         $scope.states.projects = false;
     }
 
+    $scope.showOutput = function(test){
+        $scope.states.content = test.last.raw;
+    }
     $scope.delete = function (test) {
         $scope.projects.deleteTest(test);
     };
-
-    $scope.runTests = function () {
-        console.log('Running tests', $scope.projects.selected.tests);
-        _.each($scope.projects.selected.tests, function (test, idx) {
-            $scope.projects.selected.tests[idx].state = 'running';
-        })
-    }
-
-    $scope.poll = function (epoch_time) {
-        if ($scope.projects.selected == undefined) {
-            $timeout($scope.poll, $scope.every);
-        } else {
-            /** only run this if there is a project selected **/
-            $http({method: 'GET', url: '/index.php/files/modified/' + epoch_time + '/' + $scope.projects.selected.name})
-                .success(function (data) {
-                    if (data.modified) {
-                        $scope.runTests();
-                    }
-                    $timeout(function () {
-                        $scope.poll(data.time);
-                    }, $scope.every);
-                });
-        }
-    };
-    $scope.poll($scope.epoch_time);
+    $scope.projects.poll(0);
 }
 
 function projectCtrl($scope, $http, states, projects) {
@@ -170,7 +191,6 @@ function filesCtrl($scope, $http, states, projects) {
     $scope.files = [];
     $scope.query = "";
     $scope.projects = projects;
-
 
     $scope.search = function () {
         if (_.isEmpty($scope.query)) {
