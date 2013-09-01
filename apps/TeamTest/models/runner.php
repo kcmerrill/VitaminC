@@ -33,7 +33,9 @@ class runner{
     }
 
     function execute($cmd){
-        return `$cmd`;
+        $output = '';
+        exec($cmd, $output);
+        return implode("\n", $output);
     }
 
     function match($expression, $text, $new, $old){
@@ -51,7 +53,7 @@ class runner{
         }
         $runner = $this->getRunner(pathinfo($file));
         if($runner){
-            $results['cmd'] = $runner['test']['cmd'] . ' ' . $file;
+            $results['cmd'] = $runner['test']['cmd'] . ' ' . $file . ' 2>&1';
             $results['raw'] = $this->execute($results['cmd']);
             /** The results? **/
             $results['status'] = $this->match($runner['test']['pass'], $results['raw'], 'pass', $results['status']);

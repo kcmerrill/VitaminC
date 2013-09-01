@@ -118,7 +118,6 @@ tt.factory('projects', function ($http, $timeout, states) {
                     self.selected.tests[id].last = data;
                     if(data.status != 'pass'){
                         states.content = data.raw;
-                        //states.content = data.cmd;
                     }
                 });
         },

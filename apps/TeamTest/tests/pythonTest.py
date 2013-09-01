@@ -26,7 +26,7 @@ class TestSequenceFunctions(unittest.TestCase):
             self.assertTrue(element in self.seq)
 
     def test_failure(self):
-        self.assertFalse(False)
+        self.assertFalse(True)
 
 if __name__ == '__main__':
     unittest.main()
