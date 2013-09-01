@@ -2,7 +2,7 @@
     "filetypes":["py"],
     "scratch": "python",
     "test": {
-        "cmd":"whoami;ls;python",
+        "cmd":"python",
         "pass":"(OK)",
         "fail": "(FAILED)(\\s+)(\\()(failures)"
     }

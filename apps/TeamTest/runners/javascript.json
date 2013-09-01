@@ -1,0 +1,9 @@
+{
+    "filetypes":["js","html"],
+    "scratch": "phantomjs",
+    "test": {
+        "cmd":"phantomjs js/tt/run-jasmine.js",
+        "pass":"(Passing)(\\s+)(\\d+)(\\s+)(spec)",
+        "fail": "(test)(\\(s\\))(\\s+)(FAILED)(:)"
+    }
+}
