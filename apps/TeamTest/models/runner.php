@@ -53,7 +53,7 @@ class runner{
         }
         $runner = $this->getRunner(pathinfo($file));
         if($runner){
-            $results['cmd'] = $runner['test']['cmd'] . ' ' . $file . ' 2>&1';
+            $results['cmd'] = $runner['test']['cmd'] . ' "' . $file . '" 2>&1';
             $results['raw'] = $this->execute($results['cmd']);
             /** The results? **/
             $results['status'] = $this->match($runner['test']['pass'], $results['raw'], 'pass', $results['status']);
