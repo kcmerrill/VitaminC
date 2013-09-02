@@ -1,0 +1,9 @@
+{
+    "filetypes":["java"],
+    "scratch": "java",
+    "test": {
+        "cmd":"cd \"%TestDir%\" && javac \"%TestBaseName%\" 2>&1 && java org.junit.runner.JUnitCore \"%TestFileName%\" 2>&1",
+        "pass":"(OK)",
+        "fail": "[(FAILED)( cannot )]"
+    }
+}

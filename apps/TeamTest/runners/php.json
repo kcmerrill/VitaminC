@@ -2,7 +2,7 @@
     "filetypes":["php"],
     "scratch": "php",
     "test": {
-        "cmd":"phpunit",
+        "cmd":"phpunit \"%FullTestPath%\"",
         "pass":"(OK)(\\s+)(\\()",
         "fail": "(FAILURES)(!)"
     }
