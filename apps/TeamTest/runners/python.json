@@ -2,7 +2,7 @@
     "filetypes":["py"],
     "scratch": "python",
     "test": {
-        "cmd":"python",
+        "cmd":"python \"%FullTestPath%\" 2>&1",
         "pass":"(OK)",
         "fail": "(FAILED)(\\s+)(\\()(failures)"
     }
