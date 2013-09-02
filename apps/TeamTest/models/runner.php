@@ -53,7 +53,14 @@ class runner{
         }
         $runner = $this->getRunner(pathinfo($file));
         if($runner){
-            $results['cmd'] = $runner['test']['cmd'] . ' "' . $file . '" 2>&1';
+            $testFileInfo = array(
+                '%FullTestPath%' => $file,
+                '%TestDir%' => pathinfo($file, PATHINFO_DIRNAME),
+                '%TestBaseName%' => pathinfo($file, PATHINFO_BASENAME),
+                '%TestFileName%' => pathinfo($file, PATHINFO_FILENAME),
+                '%TestFileExt%' => pathinfo($file, PATHINFO_EXTENSION)
+            );
+            $results['cmd'] = str_replace(array_keys($testFileInfo), array_values($testFileInfo), $runner['test']['cmd']);
             $results['raw'] = $this->execute($results['cmd']);
             /** The results? **/
             $results['status'] = $this->match($runner['test']['pass'], $results['raw'], 'pass', $results['status']);
