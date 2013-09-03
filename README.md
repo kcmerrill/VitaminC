@@ -14,18 +14,24 @@ Version 2.0 will be a way to gameify testing, by allowing points based on variou
 Quick Start
 ===========
 
-This project makes use of wikidiff2. To install this under Ubuntu do a:
+1. This project makes use of wikidiff2. To install this under Ubuntu do a:
 
-    `sudo apt-get install php-wikidiff2`
+    sudo apt-get install php-wikidiff2
 
-Clone the repository with a:
+Under other distributions and OS's, do whatever it is that you do.
 
-    `git clone https://github.com/autowitch/TeamTest.git`
+
+2. Clone the repository with a:
+
+    git clone https://github.com/autowitch/TeamTest.git
     
-Now go into the new repository and set it set up:
+3. Now go into the new repository and set it set up:
 
-    `cd TeamTest/`
+    cd TeamTest/
+    php ./dev-install.php
+    
+4. Now go into the www dir and start up the server:
 
-    `php ./dev-install.php`
-    `cd www/`
+    cd www/
+    php -S localhost:9999 
 
