@@ -7,6 +7,6 @@ class wooter extends PHPUnit_Framework_TestCase
     }
 
     public function testBleh(){
-        $this->assertFalse(true);
+        $this->assertFalse(false);
     }
 }

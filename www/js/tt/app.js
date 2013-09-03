@@ -162,7 +162,7 @@ function masterCtrl($scope, $http, $timeout, states, projects) {
     }
 
     $scope.showOutput = function(test){
-        $scope.states.content = test.last.raw;
+        $scope.states.content = _.isEmpty(test.last.raw) ? '' : test.last.raw;
     }
     $scope.delete = function (test) {
         $scope.projects.deleteTest(test);
@@ -178,6 +178,7 @@ function projectCtrl($scope, $http, states, projects) {
     $scope.selectProject = function (project) {
         $scope.states.ready = true;
         $scope.projects.selected = project;
+        $scope.projects.runTests();
     }
 
     /** Load automagically if no project is currently set **/
@@ -210,7 +211,9 @@ function filesCtrl($scope, $http, states, projects) {
 
     $scope.addTest = function (file) {
         $scope.projects.addTest(file);
-        $scope.cancel();
+        $scope.query = "";
+        $scope.states.file_text = "";
+        $scope.files = [];
     }
 
     $scope.cancel = function () {
