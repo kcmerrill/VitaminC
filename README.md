@@ -20,10 +20,12 @@ Quick Start
 2. Now go into the new repository and set it set up:
 
     cd TeamTest/
+    
     php ./dev-install.php
     
 3. Now go into the www dir and start up the server:
 
     cd www/
+    
     php -S localhost:9999 
 
