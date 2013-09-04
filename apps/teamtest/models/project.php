@@ -49,7 +49,7 @@ class project{
     }
 
     function filename($name){
-        return str_replace(array(' ','.','!','?','#'), '-',strtolower($name));
+        return str_replace(array(',',' ','.','!','?','#'), '-',strtolower($name));
     }
 
     function config($config, $project, $default = false){
