@@ -29,3 +29,6 @@ php ./dev-install.php
 cd www/
 php -S localhost:9999 
 ```
+
+
+[![Build Status](https://travis-ci.org/kcmerrill/TeamTest.png?branch=master)](https://travis-ci.org/kcmerrill/TeamTest)
