@@ -158,7 +158,7 @@ function masterCtrl($scope, $http, $timeout, states, projects) {
     $scope.states = states;
     $scope.projects = projects;
     $scope.addTest = function () {
-        $scope.states.shortname_list = true;
+        $scope.states.file_list = true;
         $scope.states.projects = false;
     }
 
@@ -190,38 +190,38 @@ function projectCtrl($scope, $http, states, projects) {
 
 function filesCtrl($scope, $http, states, projects) {
     $scope.states = states;
-    $scope.shortnames = [];
+    $scope.files = [];
     $scope.query = "";
     $scope.projects = projects;
 
     $scope.search = function () {
         if (_.isEmpty($scope.query)) {
-            $scope.shortnames = [];
-            $scope.states.shortname_text = '';
+            $scope.files = [];
+            $scope.states.file_text = '';
             return true;
         }
         $http({method: 'GET', url: '/index.php/files/' + encodeURIComponent($scope.query.replace('/', '[[..........]]')) + '/' + $scope.projects.selected.shortname})
             .error(function (data) {
-                $scope.states.shortname_text = "Your basepath cannot be found, please update " + $scope.projects.selected.shortname;
+                $scope.states.file_text = "Your basepath cannot be found, please update " + $scope.projects.selected.shortname;
             })
             .success(function (data) {
-                $scope.shortnames = data;
-                $scope.states.shortname_text = _.size(data) + ' files matched "' + $scope.query + '"';
+                $scope.files = data;
+                $scope.states.file_text = _.size(data) + ' files matched "' + $scope.query + '"';
             });
     }
 
     $scope.addTest = function (file) {
         $scope.projects.addTest(file);
         $scope.query = "";
-        $scope.states.shortname_text = "";
-        $scope.shortnames = [];
+        $scope.states.file_text = "";
+        $scope.files = [];
     }
 
     $scope.cancel = function () {
-        $scope.shortnames = [];
+        $scope.files = [];
         $scope.query = "";
-        $scope.states.shortname_text = "";
-        $scope.states.shortname_list = false;
+        $scope.states.file_text = "";
+        $scope.states.file_list = false;
         $scope.states.projects = true;
     }
 }

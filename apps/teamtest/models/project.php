@@ -57,7 +57,7 @@ class project{
     }
 
     function save($project){
-        $file_to_save = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'projects' . DIRECTORY_SEPARATOR . $this->config('shortname', $project);
+        $file_to_save = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'projects' . DIRECTORY_SEPARATOR . $this->config('shortname', $project) . '.json';
         if(isset($this->projects[$project])){
             if(!is_dir(dirname($file_to_save))){
                 mkdir(dirname($file_to_save), 0777, TRUE);
