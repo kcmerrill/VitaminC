@@ -4,6 +4,10 @@
     "test": {
         "cmd":"phpunit \"%FullTestPath%\"",
         "pass":"(OK)(\\s+)(\\()",
-        "fail": "(FAILURES)(!)"
+        "fail": "(FAILURES)(!)",
+        "stats": {
+            "test_count": "OK\\s+\\((\\d+)\\s+tests",
+            "assertion_count": ",\\s+(\\d+)\\s+assertions\\)"
+        }
     }
 }

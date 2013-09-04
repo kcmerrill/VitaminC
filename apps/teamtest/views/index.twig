@@ -225,7 +225,7 @@
             </div>
             <i class="pull-left icon-plus add-test orange-font" ng-click="addTest()"></i>
             <div class="pull-right tools green-font">
-                <i class="icon-trophy" style="cursor:no-drop"></i><i class="icon-wrench"></i><i class="icon-cogs" ng-click="states.settings = !states.settings"></i>
+                <i class="icon-trophy" style="cursor:no-drop"></i><i class="icon-cogs" ng-click="states.settings = !states.settings"></i>
             </div>
             <div style="clear:both"></div>
         </div>
@@ -274,11 +274,11 @@
             <pre>{[{states.content}]}</pre>
         </div>
         <div style="clear:both"></div>
-        <div class="footer grey-bg white-font custom-font">
+        <div class="footer grey-bg white-font custom-font" ng-controller="footerCtrl">
             <div class="centered copyright custom-font green-font">
-                <span class="orange-font custom-font">n/a</span>&nbsp;<span class="white-font">Tests</span> |
-                <span class="orange-font custom-font">n/a</span>&nbsp;<span class="white-font">Assertsions</span> |
-                <span class="orange-font custom-font">n/a</span>&nbsp;<span class="white-font">Failuress</span>
+                <span class="orange-font custom-font">{[{projects.stats.tests}]}</span>&nbsp;<span class="white-font">Tests</span> |
+                <span class="orange-font custom-font">{[{projects.stats.assertions}]}</span>&nbsp;<span class="white-font">Assertsions</span> |
+                <span class="orange-font custom-font">{[{projects.stats.failures}]}</span>&nbsp;<span class="white-font">Failures</span>
             </div>
         </div>
     </div>

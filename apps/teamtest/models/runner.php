@@ -42,6 +42,12 @@ class runner{
         return preg_match_all ('/'.$expression.'/is', $text, $matches) ? $new : $old;
     }
 
+    function match_count($expression, $text){
+        preg_match_all ('/'.$expression.'/is', $text, $matches);
+        return isset($matches[1][0]) && is_numeric($matches[1][0]) ? $matches[1][0] : 0;
+    }
+
+
     function test($file = ''){
         $results = array(
             'status'=>'unknown',
@@ -65,6 +71,13 @@ class runner{
             /** The results? **/
             $results['status'] = $this->match($runner['test']['pass'], $results['raw'], 'pass', $results['status']);
             $results['status'] = $this->match($runner['test']['fail'], $results['raw'], 'fail', $results['status']);
+
+            if($results['status'] == 'pass' && isset($runner['test']['stats'])){
+                $results['test_count'] = $this->match_count($runner['test']['stats']['test_count'], $results['raw']);
+                $results['assertion_count'] = $this->match_count($runner['test']['stats']['assertion_count'], $results['raw']);
+            } else {
+                $results['test_count'] = $results['assertion_count'] = 0;
+            }
         }
         return $results;
     }

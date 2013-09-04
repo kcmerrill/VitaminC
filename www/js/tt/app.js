@@ -62,8 +62,13 @@ tt.factory('states', function () {
 
 tt.factory('projects', function ($http, $timeout, states) {
     return {
+        stats: {
+            tests:0,
+            assertions:0,
+            failures:0
+        },
         every: 2000,
-        selected: undefined,
+        selected: {},
         last_modified:0,
         all: {},
         fetchAll: function () {
@@ -81,6 +86,7 @@ tt.factory('projects', function ($http, $timeout, states) {
                         for (var key in self.all)
                             self.selected = self.all[key];
                         states.ready = true;
+                        self.runTests();
                     }
                 });
         },
@@ -115,7 +121,11 @@ tt.factory('projects', function ($http, $timeout, states) {
             $http({method: 'POST', data: {'file':self.selected.tests[id].path }, url: '/index.php/test'})
                 .success(function (data) {
                     self.selected.tests[id].state = data.status;
+                    self.selected.tests[id].test_count = data.test_count;
+                    self.selected.tests[id].assertion_count = data.assertion_count;
                     self.selected.tests[id].last = data;
+                    self.stats.tests = self.sum("test_count");
+                    self.stats.assertions = self.sum("assertion_count");
                     if(data.status != 'pass'){
                         states.content = data.raw;
                     }
@@ -150,6 +160,17 @@ tt.factory('projects', function ($http, $timeout, states) {
                         }, self.every);
                 });
             }
+        },
+        sum: function(key){
+            var self = this;
+            var sum = 0;
+            _.each(_.pluck(self.selected.tests, key), function(val){
+                if(val != undefined){
+                    console.log("sum",sum, "val",val);
+                    sum = sum + parseInt(val);
+                }
+            });
+            return sum;
         }
     }
 });
@@ -236,4 +257,8 @@ function settingsCtrl($scope, $http, states, projects) {
         projects.create($scope.p_name, $scope.p_basepath);
         states.settings = false;
     }
+}
+
+function footerCtrl($scope, projects){
+    $scope.projects = projects;
 }
