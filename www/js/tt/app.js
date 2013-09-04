@@ -166,7 +166,6 @@ tt.factory('projects', function ($http, $timeout, states) {
             var sum = 0;
             _.each(_.pluck(self.selected.tests, key), function(val){
                 if(val != undefined){
-                    console.log("sum",sum, "val",val);
                     sum = sum + parseInt(val);
                 }
             });
