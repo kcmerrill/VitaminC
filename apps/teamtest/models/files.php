@@ -3,15 +3,24 @@
 namespace teamtest\models;
 
 class files{
-    function query($basepath, $query, $callback, $max = 0){
+    function query($basepath, $params, $callback, $global_ignore = array(), $max = 0){
         if(!is_dir($basepath)){
             return false;
         }
         $iterator = new \RecursiveDirectoryIterator($basepath);
         $files = array();
+        $global_ignore = is_array($global_ignore) ? $global_ignore : array();
         foreach (new \RecursiveIteratorIterator($iterator) as $fileinfo) {
-            if($callback($fileinfo, $query)){
-                $files[] = $fileinfo->getPathname();
+            if($callback($fileinfo, $params)){
+                $ignored = false;
+                foreach($global_ignore as $ignore){
+                    if(stristr($fileinfo->getPathname(), $ignore)){
+                        $ignored = true;
+                    }
+                }
+                if(!$ignored){
+                    $files[] = $fileinfo->getPathname();
+                }
             }
             if($max && count($files) > $max){
                 break;

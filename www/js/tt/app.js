@@ -72,7 +72,7 @@ tt.factory('projects', function ($http, $timeout, states) {
                 .success(function (data) {
                     self.all = data;
                     if (self.selected != undefined) {
-                        self.selected = _.findWhere(self.all, {file: self.selected.file})
+                        self.selected = _.findWhere(self.all, {file: self.selected.shortname})
                     }
                     if (!_.size(self.all)) {
                         states.settings = true;
@@ -86,7 +86,7 @@ tt.factory('projects', function ($http, $timeout, states) {
         },
         addTest: function (file) {
             var self = this;
-            $http({method: 'POST', data: {'test': file}, url: '/index.php/project/test/' + self.selected.file})
+            $http({method: 'POST', data: {'test': file}, url: '/index.php/project/test/' + self.selected.shortname})
                 .error(function (data) {
                 })
                 .success(function (data) {
@@ -95,7 +95,7 @@ tt.factory('projects', function ($http, $timeout, states) {
         },
         deleteTest: function (test) {
             var self = this;
-            $http({method: 'DELETE', url: '/index.php/project/test/' + self.selected.file + '/' + test._id})
+            $http({method: 'DELETE', url: '/index.php/project/test/' + self.selected.shortname + '/' + test._id})
                 .error(function(data){
 
                 })
@@ -122,6 +122,7 @@ tt.factory('projects', function ($http, $timeout, states) {
                 });
         },
         runTests: function () {
+            states.content = '';
             var self = this;
             _.each(self.selected.tests, function (test, idx) {
                 if (self.selected.tests[idx].state != 'running') {
@@ -138,7 +139,7 @@ tt.factory('projects', function ($http, $timeout, states) {
                 }, self.every);
             } else {
                 /** only run this if there is a project selected **/
-                $http({method: 'GET', url: '/index.php/files/modified/' + epoch_time + '/' + self.selected.file})
+                $http({method: 'GET', url: '/index.php/files/modified/' + epoch_time + '/' + self.selected.shortname})
                     .success(function (data) {
                         self.last_modfied = data.modified;
                         if (data.modified) {
@@ -157,7 +158,7 @@ function masterCtrl($scope, $http, $timeout, states, projects) {
     $scope.states = states;
     $scope.projects = projects;
     $scope.addTest = function () {
-        $scope.states.file_list = true;
+        $scope.states.shortname_list = true;
         $scope.states.projects = false;
     }
 
@@ -189,38 +190,38 @@ function projectCtrl($scope, $http, states, projects) {
 
 function filesCtrl($scope, $http, states, projects) {
     $scope.states = states;
-    $scope.files = [];
+    $scope.shortnames = [];
     $scope.query = "";
     $scope.projects = projects;
 
     $scope.search = function () {
         if (_.isEmpty($scope.query)) {
-            $scope.files = [];
-            $scope.states.file_text = '';
+            $scope.shortnames = [];
+            $scope.states.shortname_text = '';
             return true;
         }
-        $http({method: 'GET', url: '/index.php/files/' + encodeURIComponent($scope.query.replace('/', '[[..........]]')) + '/' + $scope.projects.selected.file})
+        $http({method: 'GET', url: '/index.php/files/' + encodeURIComponent($scope.query.replace('/', '[[..........]]')) + '/' + $scope.projects.selected.shortname})
             .error(function (data) {
-                $scope.states.file_text = "Your basepath cannot be found, please update " + $scope.projects.selected.file;
+                $scope.states.shortname_text = "Your basepath cannot be found, please update " + $scope.projects.selected.shortname;
             })
             .success(function (data) {
-                $scope.files = data;
-                $scope.states.file_text = _.size(data) + ' files matched "' + $scope.query + '"';
+                $scope.shortnames = data;
+                $scope.states.shortname_text = _.size(data) + ' files matched "' + $scope.query + '"';
             });
     }
 
     $scope.addTest = function (file) {
         $scope.projects.addTest(file);
         $scope.query = "";
-        $scope.states.file_text = "";
-        $scope.files = [];
+        $scope.states.shortname_text = "";
+        $scope.shortnames = [];
     }
 
     $scope.cancel = function () {
-        $scope.files = [];
+        $scope.shortnames = [];
         $scope.query = "";
-        $scope.states.file_text = "";
-        $scope.states.file_list = false;
+        $scope.states.shortname_text = "";
+        $scope.states.shortname_list = false;
         $scope.states.projects = true;
     }
 }

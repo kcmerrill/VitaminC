@@ -14,18 +14,18 @@ Version 2.0 will be a way to gameify testing, by allowing points based on variou
 Quick Start
 ===========
 1. Clone the repository with a:
+```
+git clone https://github.com/kcmerrill/TeamTest.git
+```
 
-    git clone https://github.com/kcmerrill/TeamTest.git
-    
 2. Now go into the new repository and set it set up:
+```
+cd TeamTest/
+php ./dev-install.php
+```
 
-    cd TeamTest/
-    
-    php ./dev-install.php
-    
 3. Now go into the www dir and start up the server:
-
-    cd www/
-    
-    php -S localhost:9999 
-
+```
+cd www/
+php -S localhost:9999 
+```

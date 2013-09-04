@@ -18,17 +18,31 @@ class project{
     function getAll(){
         $projects = array();
         foreach (glob(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'projects' . DIRECTORY_SEPARATOR . '*.json') as $project) {
+            $info = pathinfo($project);
             $project_json = json_decode(file_get_contents($project), true);
-            $projects[$project_json['file']] = $project_json;
+            $project_json['shortname'] = $info['filename'];
+            $project_json['full_file_path'] = $project;
+            $projects[$project_json['shortname']] = $project_json;
         }
         return $projects;
+    }
+
+    function remove($name){
+        $this->projects = $this->getAll();
+        if(isset($this->projects[$name]) && is_file($this->projects[$name]['full_file_path'])){
+            unlink($this->projects[$name]['full_file_path']);
+            unset($this->projects[$name]);
+            return true;
+        }
+        return false;
     }
 
     function create($name, $basepath){
         $project = array(
             'basepath'=>$basepath,
             'name'=>$name,
-            'file'=>$this->filename($name) . '.json'
+            'ignored_files'=>array('.git','._','.idea'),
+            'shortname'=>$this->filename($name)
         );
         $this->projects[$project['name']] = $project;
         return $this->save($project['name']);
@@ -43,7 +57,7 @@ class project{
     }
 
     function save($project){
-        $file_to_save = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'projects' . DIRECTORY_SEPARATOR . $this->config('file', $project);
+        $file_to_save = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'projects' . DIRECTORY_SEPARATOR . $this->config('shortname', $project);
         if(isset($this->projects[$project])){
             if(!is_dir(dirname($file_to_save))){
                 mkdir(dirname($file_to_save), 0777, TRUE);

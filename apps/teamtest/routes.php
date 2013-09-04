@@ -30,7 +30,7 @@ $app->delete('/project/test/{project}/{test}', function($project, $test, Request
 $app->get('/files/modified/{query}/{project}', function($query, $project) use($app){
     $files = $app['files']->query($app['project']->config('basepath', $project, __DIR__), $query, function($fileinfo, $query){
         return $fileinfo->getMTime() >= $query && !$fileinfo->isDir();
-    },1);
+    },$app['project']->config('ignored_files', $project, array()), 1);
     return $app->json(array('time'=>time(),'query'=>$query, 'files'=>$files, 'basepath'=>$app['project']->config('basepath', $project, __DIR__),'modified'=>count($files) ? true : false), 200);
 });
 
