@@ -25,7 +25,7 @@ class projectTest extends PHPUnit_Framework_TestCase {
         /* do some quick assertions to make sure the creation is succesful */
         $this->assertEquals('/home/cmerrill/something/', $this->projects->config('basepath', 'kcwazheretest'));
         $this->assertEquals('kcwazheretest', $this->projects->config('name', 'kcwazheretest'));
-        $this->assertEquals(array('.git','._','.idea'), $this->projects->config('ignored_files', 'kcwazheretest'));
+        $this->assertEquals(array('.git','._','.idea','.class'), $this->projects->config('ignored_files', 'kcwazheretest'));
 
         /* go ahead and remove the test now */
         $this->projects->remove('kcwazheretest');

@@ -226,8 +226,12 @@ function filesCtrl($scope, $http, states, projects) {
                 $scope.states.file_text = "Your basepath cannot be found, please update " + $scope.projects.selected.shortname;
             })
             .success(function (data) {
-                $scope.files = data;
-                $scope.states.file_text = _.size(data) + ' files matched "' + $scope.query + '"';
+                if (Array.isArray(data)) {
+                    $scope.files = data;
+                    $scope.states.file_text = _.size(data) + ' files matched "' + $scope.query + '"';
+                } else {
+                    $scope.states.file_text = "There was a problem collecting the list of files. Is the server running?";
+                }
             });
     }
 

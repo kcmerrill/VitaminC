@@ -14,8 +14,9 @@ class files{
             if($callback($fileinfo, $params)){
                 $ignored = false;
                 foreach($global_ignore as $ignore){
-                    if(stristr($fileinfo->getPathname(), $ignore)){
+                    if(stristr($fileinfo->getPathname(), $ignore) !== false){
                         $ignored = true;
+                        break; // This file is ignored, no need to keep checking
                     }
                 }
                 if(!$ignored){
