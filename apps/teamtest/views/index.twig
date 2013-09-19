@@ -24,6 +24,11 @@
         .header {
             padding:10px 10px 10px 15px;
         }
+        .header .rerun-tests{
+            margin-top:5px;
+            padding-right:10px;
+            cursor:pointer;
+        }
         .body {
             padding:0px 0px 0px 10px;
         }
@@ -86,6 +91,9 @@
         }
         .white-bg{
             background-color:white;
+        }
+        .tiny-font {
+            font-size:5px;
         }
         .rounded-corners{
             -moz-border-radius: 2px;
@@ -203,7 +211,11 @@
         .projects > .project:hover{
             background-color:#FCA629;
         }
-
+        .projects .add-new{
+            font-size:20px;
+            cursor:pointer;
+            padding:10px;
+        }
         .settings{
             width:100%;
         }
@@ -220,6 +232,7 @@
     </style>
     <div class="container">
         <div class="header grey-bg" ng-controller="masterCtrl" ng-show="states.ready">
+            <i class="pull-left icon-refresh rerun-tests orange-font" ng-show="projects.selected.tests.length" ng-click="projects.runTests()"></i>
             <div class="test-tab test-{[{test.state}]}" ng-repeat="test in projects.selected.tests" ng-click="showOutput(test)">
                 {[{test.info.basename}]}<span class="close pull-right cancel grey-font" ng-click="delete(test)">&#10006;</span>
             </div>
@@ -248,6 +261,7 @@
                 <div class="project custom-font grey-bg white-font" ng-show="projects.all.length == 0">
                     New Project
                 </div>
+                <i class="pull-right icon-plus add-new green-font" ng-click="states.settings = !states.settings"></i>
             </div>
             <div style="clear:both"></div>
             <div style="clear:both"></div>
@@ -277,8 +291,7 @@
         <div class="footer grey-bg white-font custom-font" ng-controller="footerCtrl">
             <div class="centered copyright custom-font green-font">
                 <span class="orange-font custom-font">{[{projects.stats.tests}]}</span>&nbsp;<span class="white-font">Tests</span> |
-                <span class="orange-font custom-font">{[{projects.stats.assertions}]}</span>&nbsp;<span class="white-font">Assertsions</span> |
-                <span class="orange-font custom-font">{[{projects.stats.failures}]}</span>&nbsp;<span class="white-font">Failures</span>
+                <span class="orange-font custom-font">{[{projects.stats.assertions}]}</span>&nbsp;<span class="white-font">Assertsions</span>
             </div>
         </div>
     </div>

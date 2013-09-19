@@ -6,7 +6,7 @@
         "pass":"(OK)(\\s+)(\\()",
         "fail": "(FAILURES)(!)",
         "stats": {
-            "test_count": "OK\\s+\\((\\d+)\\s+tests",
+            "test_count": "OK\\s+\\((\\d+)\\s+test",
             "assertion_count": ",\\s+(\\d+)\\s+assertions\\)"
         }
     }

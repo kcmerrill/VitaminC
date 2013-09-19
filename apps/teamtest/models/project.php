@@ -64,7 +64,9 @@ class project{
             }
             file_put_contents(
                 $file_to_save,
-                json_encode($this->projects[$project], JSON_PRETTY_PRINT));
+                /* Meh, I hate doing this, but this is the only thing keeping this app from 5.3 compatibility */
+                //json_encode($this->projects[$project], JSON_PRETTY_PRINT));
+                json_encode($this->projects[$project]));
             $this->getAll();
             return true;
         }

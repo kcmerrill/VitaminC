@@ -118,7 +118,7 @@ tt.factory('projects', function ($http, $timeout, states) {
         },
         testRunner: function (id) {
             var self = this;
-            $http({method: 'POST', data: {'file':self.selected.tests[id].path }, url: '/index.php/test'})
+            $http({method: 'POST', data: {'file':self.selected.tests[id].path,'project': self.selected }, url: '/index.php/test'})
                 .success(function (data) {
                     self.selected.tests[id].state = data.status;
                     self.selected.tests[id].test_count = data.test_count;
