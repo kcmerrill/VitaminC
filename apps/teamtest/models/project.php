@@ -41,7 +41,7 @@ class project{
         $project = array(
             'basepath'=>$basepath,
             'name'=>$name,
-            'ignored_files'=>array('.git','._','.idea'),
+            'ignored_files'=>array('.git','._','.idea','.class'),
             'shortname'=>$this->filename($name)
         );
         $this->projects[$project['name']] = $project;

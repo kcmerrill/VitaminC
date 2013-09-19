@@ -2,7 +2,7 @@
     "filetypes":["java"],
     "scratch": "java",
     "test": {
-        "cmd":"cd \"%TestDir%\" && javac \"%TestBaseName%\" 2>&1 && java org.junit.runner.JUnitCore \"%TestFileName%\" 2>&1",
+        "cmd":"cd \"%TestDir%\" && javac -sourcepath \"%JavaSrcPath%\" -classpath \"/usr/share/java/junit.jar:%JavaSrcPath%\" \"%FullTestPath%\" 2>&1 && java -cp \"/usr/share/java/junit.jar:%JavaSrcPath%\" org.junit.runner.JUnitCore \"%JavaClass%\" 2>&1",
         "pass":"(OK)",
         "fail": "[(FAILED)( cannot )]"
     }
