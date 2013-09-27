@@ -214,31 +214,36 @@
         .projects .add-new{
             font-size:20px;
             cursor:pointer;
+            padding:10px 15px 10px 10px;
+        }
+        .project-crud{
+            display:inline-block;
+            padding:10px;
+            width:230px;
+        }
+        .project-crud > .config{
             padding:10px;
         }
-        .settings{
-            width:100%;
-        }
-        .settings > .config{
-            padding:10px;
-        }
-        .settings > .config > input{
+        .project-crud > .config > input{
             font-size:20px;
         }
-        .settings > .button{
+        .project-crud > .button{
             margin-top:31px;
         }
 
+        .project-crud > .cancel{
+            margin-right:10px;
+        }
     </style>
     <div class="container">
-        <div class="header grey-bg" ng-controller="masterCtrl" ng-show="states.ready">
+        <div class="header grey-bg" ng-controller="headerCtrl" ng-show="states.ready">
             <i class="pull-left icon-refresh rerun-tests orange-font" ng-show="projects.selected.tests.length" ng-click="projects.runTests()"></i>
             <div class="test-tab test-{[{test.state}]}" ng-repeat="test in projects.selected.tests" ng-click="showOutput(test)">
                 {[{test.info.basename}]}<span class="close pull-right cancel grey-font" ng-click="delete(test)">&#10006;</span>
             </div>
             <i class="pull-left icon-plus add-test orange-font" ng-click="addTest()"></i>
-            <div class="pull-right tools green-font">
-                <i class="icon-trophy" style="cursor:no-drop"></i><i class="icon-cogs" ng-click="states.settings = !states.settings"></i>
+            <div class="pull-right custom-font green-font">
+                <span class="orange-font custom-font">{[{projects.stats.tests}]}</span>&nbsp;|&nbsp;<span class="orange-font custom-font">{[{projects.stats.assertions}]}</span>
             </div>
             <div style="clear:both"></div>
         </div>
@@ -252,21 +257,16 @@
             </div>
             <div style="clear:both;background-color:pink;"></div>
         </div>
-        <div ng-controller="projectCtrl" ng-show="states.projects">
+        <div ng-controller="projectCtrl">
             <div class="projects pull-right">
                 <span class="custom-font grey-font">Projects:</span>
-                <div class="project custom-font" ng-repeat="project in projects.all" ng-click="selectProject(project)" ng-class="{'grey-bg': projects.selected.file == project.file,'white-font': projects.selected.file == project.file, 'green-bg': projects.selected.file != project.file}">
+                <div class="project custom-font" ng-repeat="project in projects.all" ng-click="selectProject(project)" ng-class="{'grey-bg': projects.selected.shortname == project.shortname,'white-font': projects.selected.file == project.file, 'green-bg': projects.selected.shortname != project.shortname}">
                     {[{project.name}]}
                 </div>
-                <div class="project custom-font grey-bg white-font" ng-show="projects.all.length == 0">
-                    New Project
-                </div>
-                <i class="pull-right icon-plus add-new green-font" ng-click="states.settings = !states.settings"></i>
+                <i class="pull-right icon-plus add-new green-font" ng-click="createProject()"></i>
             </div>
             <div style="clear:both"></div>
-            <div style="clear:both"></div>
-            <div style="clear:both"></div>
-            <div class="settings grey-bg white-font" ng-show="states.settings" ng-controller="settingsCtrl">
+            <div class="project-crud grey-bg white-font pull-right" ng-controller="projectCrudCtrl" ng-show="states.project_crud">
                 <div class="config pull-left">
                     <span class="orange-font custom-font">Project Name: </span>
                     <br/>
@@ -277,23 +277,30 @@
                     <br/>
                     <input type="text" ng-model="p_basepath">
                 </div>
-                <div class="button green-bg grey-font rounded-corners custom-font" ng-click="save()">
+                <div class="config pull-left">
+                    <span class="orange-font custom-font">Ignore Files: </span>
+                    <br/>
+                    <input type="text" ng-model="p_ignore_files" value=".git, _., ">
+                </div>
+                <div class="pull-right button green-bg grey-font rounded-corners custom-font" ng-click="save()">
                     Save
                 </div>
+                <div class="cancel pull-right button orange-bg grey-font rounded-corners custom-font" ng-click="cancel()">
+                    Cancel
+                </div>
                 <div style="clear:both"></div>
+
+
+
+
+
             </div>
         </div>
         <div style="clear:both"></div>
-        <div class="body" ng-controller="masterCtrl">
+        <div class="body" ng-controller="headerCtrl">
             <pre>{[{states.content}]}</pre>
         </div>
         <div style="clear:both"></div>
-        <div class="footer grey-bg white-font custom-font" ng-controller="footerCtrl">
-            <div class="centered copyright custom-font green-font">
-                <span class="orange-font custom-font">{[{projects.stats.tests}]}</span>&nbsp;<span class="white-font">Tests</span> |
-                <span class="orange-font custom-font">{[{projects.stats.assertions}]}</span>&nbsp;<span class="white-font">Assertsions</span>
-            </div>
-        </div>
     </div>
     <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.1/underscore-min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>

@@ -48,6 +48,7 @@ var tt = angular.module('TeamTest', [], function ($httpProvider) {
     $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
 });
 
+//TODO: This was a silly idea kc, try again sometime please?
 tt.factory('states', function () {
     return {
         "file_list": false,
@@ -56,37 +57,37 @@ tt.factory('states', function () {
         "projects": true,
         "file_text": '',
         "settings": false,
-        "content":""
+        "content":"",
+        "project_crud":false
     }
 });
 
 tt.factory('projects', function ($http, $timeout, states) {
     return {
-        stats: {
-            tests:0,
-            assertions:0,
-            failures:0
-        },
+        stats: {},
         every: 2000,
         selected: {},
         last_modified:0,
         all: {},
         fetchAll: function () {
+            console.log("fetchAll() called");
             var self = this;
+            self.resetStats();
             $http({method: 'GET', url: '/index.php/project/all'})
                 .success(function (data) {
                     self.all = data;
-                    if (self.selected != undefined) {
-                        self.selected = _.findWhere(self.all, {file: self.selected.shortname})
-                    }
                     if (!_.size(self.all)) {
                         states.settings = true;
                     }
-                    if (_.size(self.all) >= 1 && !_.size(self.selected)) {
-                        for (var key in self.all)
+                    if (_.isEmpty(self.selected)) {
+                        console.log("All Projects: ",self.all);
+                        for (var key in self.all){
                             self.selected = self.all[key];
+                        }
                         states.ready = true;
                         self.runTests();
+                    } else {
+                        self.selected = self.all[self.selected.shortname];
                     }
                 });
         },
@@ -96,7 +97,7 @@ tt.factory('projects', function ($http, $timeout, states) {
                 .error(function (data) {
                 })
                 .success(function (data) {
-                    self.fetchAll();
+
                 });
         },
         deleteTest: function (test) {
@@ -109,9 +110,9 @@ tt.factory('projects', function ($http, $timeout, states) {
                     self.fetchAll();
                 });
         },
-        create: function (name, basepath) {
+        save: function (name, basepath, ignored_files) {
             var self = this;
-            $http({method: 'POST', data: {'name': name, 'basepath': basepath}, url: '/index.php/project'})
+            $http({method: 'POST', data: {'name': name, 'basepath': basepath, 'ignored_files': ignored_files}, url: '/index.php/project'})
                 .success(function (data) {
                     self.fetchAll();
                 });
@@ -143,7 +144,7 @@ tt.factory('projects', function ($http, $timeout, states) {
         },
         poll: function (epoch_time) {
             var self = this;
-            if (self.selected == undefined) {
+            if (_.isUndefined(self.selected)) {
                 $timeout(function () {
                     self.poll(self.last_modified);
                 }, self.every);
@@ -161,6 +162,18 @@ tt.factory('projects', function ($http, $timeout, states) {
                 });
             }
         },
+        createProject: function(){
+            var self = this;
+            self.temp_selected = self.selected;
+            self.all['zzzzzzz_last'] = {'shortname':'newproject','name':'Create a New Project'};
+            self.selected = self.all['zzzzzzz_last'];
+            self.resetStats();
+        },
+        cancelCreateProject: function(){
+            var self = this;
+            self.selected = self.temp_selected;
+            delete self.all['zzzzzzz_last'];
+        },
         sum: function(key){
             var self = this;
             var sum = 0;
@@ -170,11 +183,14 @@ tt.factory('projects', function ($http, $timeout, states) {
                 }
             });
             return sum;
+        },
+        resetStats: function(){
+            this.stats = { tests:0, assertions:0, failures:0 };
         }
     }
 });
 
-function masterCtrl($scope, $http, $timeout, states, projects) {
+function headerCtrl($scope, $http, $timeout, states, projects) {
     $scope.states = states;
     $scope.projects = projects;
     $scope.addTest = function () {
@@ -188,6 +204,13 @@ function masterCtrl($scope, $http, $timeout, states, projects) {
     $scope.delete = function (test) {
         $scope.projects.deleteTest(test);
     };
+
+    $scope.debuginfo = function(){
+        //console.log("States:",states);
+        //console.log("Projects:", projects);
+    }
+
+    //GiddyUp!
     $scope.projects.poll(0);
 }
 
@@ -196,7 +219,14 @@ function projectCtrl($scope, $http, states, projects) {
     $scope.projects = projects;
     $scope.states = states;
 
+    $scope.createProject = function(){
+        $scope.states.project_crud = true;
+        $scope.states.content = "";
+        $scope.projects.createProject();
+    }
+
     $scope.selectProject = function (project) {
+        $scope.projects.resetStats();
         $scope.states.ready = true;
         $scope.projects.selected = project;
         $scope.projects.runTests();
@@ -225,7 +255,7 @@ function filesCtrl($scope, $http, states, projects) {
                 $scope.states.file_text = "Your basepath cannot be found, please update " + $scope.projects.selected.shortname;
             })
             .success(function (data) {
-                if (Array.isArray(data)) {
+                if (_.isArray(data)) {
                     $scope.files = data;
                     $scope.states.file_text = _.size(data) + ' files matched "' + $scope.query + '"';
                 } else {
@@ -250,15 +280,22 @@ function filesCtrl($scope, $http, states, projects) {
     }
 }
 
-function settingsCtrl($scope, $http, states, projects) {
+function projectCrudCtrl($scope, $http, states, projects) {
     $scope.states = states;
     $scope.projects = projects;
     $scope.p_name = "";
     $scope.p_basepath = "";
+    $scope.p_ignore_files = ".git, .idea, _.";
+
+    $scope.cancel = function(){
+        $scope.states.project_crud = false;
+        $scope.projects.cancelCreateProject();
+    }
 
     $scope.save = function () {
-        projects.create($scope.p_name, $scope.p_basepath);
-        states.settings = false;
+        projects.save($scope.p_name, $scope.p_basepath, $scope.p_ignore_files);
+        $scope.states.project_crud = false;
+        $scope.projects.fetchAll();
     }
 }
 

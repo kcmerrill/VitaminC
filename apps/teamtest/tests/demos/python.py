@@ -19,12 +19,6 @@ class TestSequenceFunctions(unittest.TestCase):
         element = random.choice(self.seq)
         self.assertTrue(element in self.seq)
 
-    def test_sample(self):
-        with self.assertRaises(ValueError):
-            random.sample(self.seq, 20)
-        for element in random.sample(self.seq, 5):
-            self.assertTrue(element in self.seq)
-
     def test_failure(self):
         self.assertFalse(True)
 

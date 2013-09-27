@@ -2,12 +2,12 @@
     "filetypes":["php"],
     "scratch": "php",
     "test": {
-        "cmd":"phpunit \"%FullTestPath%\"",
+        "cmd":"phpunit \"%FullTestPath%\" 2>&1",
         "pass":"(OK)(\\s+)(\\()",
         "fail": "(FAILURES)(!)",
         "stats": {
             "test_count": "OK\\s+\\((\\d+)\\s+test",
-            "assertion_count": ",\\s+(\\d+)\\s+assertions\\)"
+            "assertion_count": ",\\s+(\\d+)\\s+assertion"
         }
     }
 }

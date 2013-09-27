@@ -37,13 +37,16 @@ class project{
         return false;
     }
 
-    function create($name, $basepath){
+    function create($name, $basepath, $ignored_files){
+        $ignored_files = is_array($ignored_files) ? array_map('trim', $ignored_files) : array('.git','._','.idea','.class');
+
         $project = array(
             'basepath'=>$basepath,
             'name'=>$name,
-            'ignored_files'=>array('.git','._','.idea','.class'),
+            'ignored_files'=>$ignored_files,
             'shortname'=>$this->filename($name)
         );
+
         $this->projects[$project['name']] = $project;
         return $this->save($project['name']);
     }

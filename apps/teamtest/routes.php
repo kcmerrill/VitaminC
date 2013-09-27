@@ -8,7 +8,7 @@ $app->get('/', function() use ($app) {
 
 $app->post('/project', function(Request $request) use ($app){
     $post = $request->request->all();
-    $created = $app['project']->create($post['name'], $post['basepath']);
+    $created = $app['project']->create($post['name'], $post['basepath'], explode(',', $post['ignored_files']));
     return $app->json(array('status'=>'created'), $created ? 200 : 404);
 });
 
@@ -29,20 +29,12 @@ $app->delete('/project/test/{project}/{test}', function($project, $test, Request
 
 $app->get('/files/modified/{query}/{project}', function($query, $project) use($app){
     $files = $app['files']->query(
-        $app['project']->config(
-            'basepath',
-            $project,
-            __DIR__
-        ),
+        $app['project']->config('basepath',$project,__DIR__),
         $query,
         function($fileinfo, $query){
             return $fileinfo->getMTime() >= $query && !$fileinfo->isDir();
         },
-        $app['project']->config(
-            'ignored_files',
-            $project,
-            array()
-        ),
+        $app['project']->config('ignored_files',$project,array()),
         1
     );
     return $app->json(array('time'=>time(),'query'=>$query, 'files'=>$files, 'basepath'=>$app['project']->config('basepath', $project, __DIR__),'modified'=>count($files) ? true : false, 'ignored'=> $app['project']->config('ignored_files',$project, array()) ), 200);
