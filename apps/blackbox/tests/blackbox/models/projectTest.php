@@ -6,7 +6,7 @@ class projectTest extends PHPUnit_Framework_TestCase {
     var $projects;
     var $current_projects;
     function setUp(){
-        $this->projects = new \teamtest\models\project;
+        $this->projects = new \blackbox\models\project;
         $this->current_projects = count($this->projects->getAll());
     }
 

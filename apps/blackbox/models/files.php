@@ -1,6 +1,6 @@
 <?php
 
-namespace teamtest\models;
+namespace blackbox\models;
 
 class files{
     function query($basepath, $params, $callback, $global_ignore = array(), $max = 0){

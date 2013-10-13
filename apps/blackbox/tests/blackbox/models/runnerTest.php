@@ -5,7 +5,7 @@ require_once __DIR__ . '/../../../models/runner.php';
 class runnerTest extends PHPUnit_Framework_TestCase {
     var $runner;
     function setUp(){
-        $this->runner = new \teamtest\models\runner;
+        $this->runner = new \blackbox\models\runner;
     }
 
     function testIsRunnerObject(){

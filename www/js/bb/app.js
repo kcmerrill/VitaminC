@@ -1,4 +1,4 @@
-var tt = angular.module('TeamTest', [], function ($httpProvider) {
+var bb = angular.module('BlackBox', [], function ($httpProvider) {
     // Use x-www-form-urlencoded Content-Type
     $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
 
@@ -49,7 +49,7 @@ var tt = angular.module('TeamTest', [], function ($httpProvider) {
 });
 
 //TODO: This was a silly idea kc, try again sometime please?
-tt.factory('states', function () {
+bb.factory('states', function () {
     return {
         "file_list": false,
         "modal": true,
@@ -62,7 +62,7 @@ tt.factory('states', function () {
     }
 });
 
-tt.factory('projects', function ($http, $timeout, states) {
+bb.factory('projects', function ($http, $timeout, states) {
     return {
         stats: {},
         every: 2000,
@@ -97,7 +97,7 @@ tt.factory('projects', function ($http, $timeout, states) {
                 .error(function (data) {
                 })
                 .success(function (data) {
-
+                    self.fetchAll();
                 });
         },
         deleteTest: function (test) {

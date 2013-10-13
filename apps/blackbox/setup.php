@@ -2,13 +2,13 @@
 
 /** Include our Projects */
 $app['project'] = $app->share(function(){
-    return new teamtest\models\project;
+    return new blackbox\models\project;
 });
 
 $app['files'] = $app->share(function(){
-    return new teamtest\models\files;
+    return new blackbox\models\files;
 });
 
 $app['runner'] = $app->share(function(){
-    return new teamtest\models\runner;
+    return new blackbox\models\runner;
 });

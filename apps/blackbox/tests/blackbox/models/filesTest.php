@@ -5,7 +5,7 @@ require_once __DIR__ . '/../../../models/files.php';
 class filesTest extends PHPUnit_Framework_TestCase {
     var $files;
     function setUp(){
-        $this->files = new \teamtest\models\files;
+        $this->files = new \blackbox\models\files;
     }
 
     function testIsObject(){

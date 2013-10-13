@@ -1,6 +1,6 @@
 <?php
 
-namespace teamtest\models;
+namespace blackbox\models;
 
 class project{
 

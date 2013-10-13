@@ -1,5 +1,5 @@
 <?php
-namespace teamtest\models;
+namespace blackbox\models;
 
 class runner{
     var $runners = array();
