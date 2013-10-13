@@ -6,7 +6,7 @@ Currently BlackBox is a simple test runner. Configure a project with a basepath,
 A green tab means your test passed! An orange means it failed. Click on the test tabs to see the output of each test.
 
 
-![ScreenShot](https://raw.github.com/kcmerrill/BlackBox/master/www/images/tt/preview.png)
+![ScreenShot](https://raw.github.com/kcmerrill/BlackBox/master/www/images/bb/preview.png)
 
 Version 2.0 will be a way to gameify testing, by allowing points based on various activities.
 
