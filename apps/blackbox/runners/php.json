@@ -2,7 +2,7 @@
     "filetypes":["php"],
     "scratch": "php",
     "test": {
-        "cmd":"phpunit \"%FullTestPath%\" 2>&1",
+        "cmd":"/usr/local/php-5.3.10/bin/phpunit \"%FullTestPath%\" 2>&1",
         "pass":"(OK)(\\s+)(\\()",
         "fail": "(FAILURES)(!)",
         "stats": {

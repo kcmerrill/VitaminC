@@ -1,6 +1,8 @@
 <html>
     <head>
         <title>BlackBox</title>
+        <link rel="icon" type="image/png" href="/images/bb/black-box.png">
+        <link rel="shortcut icon" type="image/png" href="/images/bb/black-box.png">
         <link href='http://fonts.googleapis.com/css?family=Marcellus+SC' rel='stylesheet' type='text/css'>
         <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
     </head>
@@ -19,6 +21,9 @@
         .container {
             min-height:100%;
             position:relative;
+        }
+        .container > .body{
+            padding-bottom:100px;
         }
         .header {
             padding:10px 10px 10px 15px;
@@ -233,7 +238,7 @@
     </style>
     <div class="container">
         <div class="header first-color-bg" ng-controller="headerCtrl" ng-show="true">
-            <i class="pull-left icon-refresh rerun-tests fourth-color-font" ng-show="projects.selected.tests.length" ng-click="projects.runTests()"></i>
+            <i class="pull-left icon-refresh rerun-tests fourth-color-font" ng-click="projects.runTests()"></i>
             <div class="test-tab test-{[{test.state}]}" ng-repeat="test in projects.selected.tests" ng-click="showOutput(test)">
                 {[{test.info.basename}]}<span class="close pull-right cancel second-color-font" ng-click="delete(test)">&#10006;</span>
             </div>
@@ -276,7 +281,7 @@
                 <div class="config pull-left">
                     <span class="fourth-color-font custom-font">Ignore Files: </span>
                     <br/>
-                    <input type="text" ng-model="p_ignore_files" value=".git, _., ">
+                    <input type="text" ng-model="p_ignore_files" value=".git, _., .idea">
                 </div>
                 <div class="pull-right button first-color-bg fourth-color-font rounded-corners custom-font" ng-click="save()">
                     Save
