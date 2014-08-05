@@ -5,6 +5,7 @@ Currently BlackBox is a simple test runner. Configure a project with a basepath,
 
 A green tab means your test passed! An orange means it failed. Click on the test tabs to see the output of each test.
 
+Currently, it will run python, perl, java, php and javascript tests concurrently. 
 
 ![ScreenShot](https://raw.github.com/kcmerrill/BlackBox/master/www/images/bb/preview.png)
 
