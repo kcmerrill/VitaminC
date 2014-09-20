@@ -1,6 +1,6 @@
 .DS_Store
 ._*
 .idea/*
-composer*
+composer.lock
 vendor/
 vitaminc/projects/*.project

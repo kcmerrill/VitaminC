@@ -1,0 +1,12 @@
+{
+    "name": "kcmerrill/vitaminc",
+    "description": "A multi language test runner",
+    "require": {
+        "php": ">=5.4.0",
+        "phpunit/phpunit": "4.2.*",
+        "silex/silex": "~1.2"
+    },
+    "autoload": {
+        "psr-0": {"kcmerrill": "vitaminc/src/"}
+    }
+}
