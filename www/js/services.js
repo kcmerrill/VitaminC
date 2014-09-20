@@ -164,7 +164,6 @@ angular.module('vitaminc.services', []).
             self.selected.tests = self.tests.files;
             $http.put('/projects/' + self.selected.project, self.selected).
             success(function(data){
-                console.log(data);
                 self.available = data;
             });
         },
