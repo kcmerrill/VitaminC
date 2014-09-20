@@ -1,0 +1,16 @@
+<div class="projects off-white-bg clear-both">
+    <div class="header-row">
+        <div class="col-md-2 header orange-font">Name</div>
+        <div class="col-md-5 header orange-font">Base Path</div>
+        <div class="col-md-3 header orange-font">Ignored Files</div>
+        <div class="col-md-1 header orange-font"># of Tests</div>
+        <div class="col-md-1 header orange-font">&nbsp;</div>
+    </div>
+    <div class="clear-both data-row" ng-repeat="p in tr.project.available" ng-class-even="orange-bg" ng-click="tr.project.select(p.project)">
+        <div class="col-md-2 brown-font" ng-class-even="'white-bg'">{{ p.project }}</div>
+        <div class="col-md-5 brown-font" ng-class-even="'white-bg'">{{ p.base_path }}</div>
+        <div class="col-md-3 brown-font" ng-class-even="'white-bg'">{{ p.ignore_files.join(', ')}}</div>
+        <div class="col-md-1 brown-font centered-text" ng-class-even="'white-bg'">{{ p.tests.length }}</div>
+        <div class="col-md-1 brown-font centered-text" ng-class-even="'white-bg'"><i class="fa fa-trash" ng-click="tr.project.delete(p.project)"></i></div>
+    </div>
+</div>

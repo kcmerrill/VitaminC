@@ -1,0 +1,10 @@
+{
+    "cmd":"./../vendor/phpunit/phpunit/phpunit \"full_filename\" 2>&1",
+    "pass":"(OK)(\\s+)(\\()",
+    "fail": "(FAILURES)(!)",
+    "error_message": "1\\)(.*?)FAILURES!",
+    "stats": {
+        "test_count": "OK\\s+\\((\\d+)\\s+test",
+        "assertion_count": ",\\s+(\\d+)\\s+assertion"
+    }
+}

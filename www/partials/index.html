@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en" ng-app="vitaminc">
+<head>
+  <meta charset="utf-8">
+  <title>VitaminC</title>
+  <link rel="stylesheet" href="css/vc.css"/>
+  <link href='//fonts.googleapis.com/css?family=Ubuntu:400,500' rel='stylesheet' type='text/css'>
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.css" rel="stylesheet">
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="content orange-bg">
+        <div class="centered-ish vc-logo vc-font white-font huge-font orange-bg">
+            <img src="images/orange.png">
+            <div class="centered-ish vc-text pull-left">
+            <div>Vitamin C</div>
+            <div class="pull-right small-font brown-font">Made with <i class="fa fa-heart"></i> by <b>kcmerrill</b></div>
+            </div>
+        </div>
+    </div>
+   <div class="view" ng-view></div>
+    <div class="test-results {{ tr.project.tests.status == true || tr.project.tests.status == 'running' ? 'brown' : 'white' }}-font medium-font vc-font" ng-class="{'yellow-bg': tr.project.tests.status == 'running', 'green-bg': tr.project.tests.status == true, 'red-bg': tr.project.tests.status == false}" ng-controller="TestResultsCtrl" ng-show="tr.project.selected">
+        <div class="tab" ng-show="tr.project.selected == false">Please select a project to run... </div>
+        <div class="tab" ng-show="tr.project.tests.status == 'running'">Running tests ... </div>
+        <div class="tab" ng-show="tr.project.tests.status == false">{{ tr.project.tests.error_message }}</div>
+        <div class="tab" ng-repeat="file in tr.project.tests.files" ng-show="tr.project.tests.status">{{ file.relative_path }}</div>
+        <div class="tab pull-right" ng-show="tr.project.selected && tr.project.tests.status">{{ tr.project.tests.assertion_count }} Assertions</div>
+        <div class="tab pull-right" ng-show="tr.project.selected && tr.project.tests.status">{{ tr.project.tests.test_count }} Tests</div>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js"></script>
+    <script src="js/underscore-min.js"></script>
+    <script src="lib/angular/angular-route.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/services.js"></script>
+    <script src="js/controllers.js"></script>
+</body>
+</html>

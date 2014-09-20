@@ -2,11 +2,5 @@
 ._*
 .idea/*
 composer*
-core/
 vendor/
-www/index.php
-apps/blackbox/data/*
-
-apps/blackbox/data/projects/blackbox.json
-
-apps/blackbox/data/projects/blackbox.json
+vitaminc/projects/*.project

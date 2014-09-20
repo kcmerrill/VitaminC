@@ -1,0 +1,200 @@
+html, body{
+  height:100%;
+  width:100%;
+  padding:0;
+  margin:0;
+  background-color:#F14D00;
+}
+
+.view {
+  height:100%;
+  width:100%;
+}
+
+.content {
+  height:100%;
+  width:100%;
+  float:left;
+}
+
+.vc-font{
+  font-family: 'Ubuntu', sans-serif;
+}
+
+.vc-logo{
+  top:25%;
+  height:150px;
+  width:400px;
+}
+
+.vc-logo .vc-text{
+  float:left;
+  padding-top:40px;
+  padding-left:5px;
+}
+
+.vc-logo img{
+  float:left;
+  height:128px;
+}
+
+.centered-ish{
+  position:relative;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.centered-text{
+    text-align:center;
+}
+
+.orange-font{
+  color:#F14D00;
+}
+
+.orange-bg{
+  background-color:#F14D00;
+}
+
+.off-white-bg{
+  background-color:#EBEBEB;
+}
+
+.off-white-font{
+  color:#EBEBEB;
+}
+
+.white-font{
+  color:white;
+}
+
+.white-bg{
+  background-color:white;
+}
+
+.brown-font{
+  color:#784B00;
+}
+
+.brown-bg{
+  background-color:#784B00;
+}
+
+.green-bg{
+  background-color:#A5D029;
+}
+
+.green-font{
+  color:#A5D029;
+}
+.yellow-bg{
+    background-color:#F9E541;
+}
+
+.red-bg{
+  background-color:#FE2019;
+}
+
+.huge-font{
+  font-size:50px;
+}
+
+.large-font{
+  font-size:35px;
+}
+
+.medium-font{
+  font-size:16px;
+}
+
+.small-font{
+  font-size:10px;
+}
+
+.menu-font{
+  font-size:30px;
+}
+
+.pull-left{
+  float:left;
+}
+
+.pull-right{
+  float:right;
+}
+
+.clear-both{
+  clear:both;
+}
+
+.rounded-corners{
+    border-radius: 10px;
+}
+
+.button{
+    cursor:pointer;
+    padding:10px 10px 10px 10px;
+}
+
+.test-results{
+  position:fixed;
+  bottom:0;
+  width:100%;
+  overflow:hidden;
+}
+
+.test-results .notification {
+  padding:10px;
+}
+
+.tab{
+  height:100%;
+  padding:10px;
+  display:inline-block;
+  cursor:pointer;
+  opacity:.5;
+}
+
+.tab:hover{
+  background-color:#F14D00;
+  color:white;
+  opacity:1;
+}
+
+.projects {
+    position:fixed;
+    bottom:0;
+    width:100%;
+    margin-bottom:40px;
+}
+
+.projects .menu-bar{
+    width:100%;
+    padding-right:100px;
+}
+
+.projects .header{
+    font-weight:bold;
+    font-size:20px;
+    border-bottom:1px solid #A5D029;
+}
+
+.projects .header-row{
+    clear:both;
+}
+
+.projects .data-row{
+    font-weight:normal;
+    font-size:15;
+    cursor:pointer;
+}
+
+.projects .data-row:hover > div{
+    background-color:#A5D029 !important;
+}
+
+.projects .data-row div{
+    padding-top:10px;
+    padding-bottom:10px;
+    overflow:hidden;
+}

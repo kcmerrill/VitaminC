@@ -1,0 +1,40 @@
+<div class="project-browser clear-both vc-font" ng-class="{'pushup-bottom': tr.project.selected != false}">
+  <div class="white-font large-font">
+    &nbsp;<i class="fa fa-times-circle clear-project" ng-show="tr.project.selected != false" ng-click="clear()"></i>{{ tr.project.selected ? tr.project.selected.project : 'Projects'}}
+    <i class="fa fa-edit edit-project-icon" ng-show="tr.project.selected != false" ng-click="edit_project = !edit_project"></i>
+  </div>
+  <div class="edit-project off-white-bg" ng-show="edit_project">
+    <div class="one-thirds pull-left">
+        <div class="text-label large-font brown-font" ng-show="new_project">Project Name</div>
+        <div><input type="text" class="medium-font" ng-model="tr.project.selected.project" ng-show="new_project"></div>
+        <div class="text-label large-font brown-font">Base Path:</div>
+        <div><input type="text" class="medium-font" ng-model="tr.project.selected.base_path"></div>
+        <div class="text-label large-font brown-font">Ignored Files:</div>
+        <div><input type="text" class="medium-font" ng-model="tr.project.selected.ignore_files" ng-list></div>
+        <div class="green-bg white-font button centered-text" ng-click="saveProject()">Save Project</div>
+    </div>
+    <div class="one-thirds pull-left" ng-show="!new_project">
+        <div class="text-label large-font brown-font">Current Tests:</div>
+        <div class="clear-both button white-font" ng-repeat="t in tr.project.tests.files" ng-class="{'red-bg': t.pass == false, 'green-bg': t.pass == true}">
+            &nbsp;<span class="pull-left">{{ t.relative_path }}</span>
+            <span class="pull-right"><i class="fa fa-times" ng-click="tr.project.deleteTest(t.full_path)"></i></span>
+        </div>
+    </div>
+    <div class="one-thirds pull-left" ng-show="!new_project">
+        <div class="text-label large-font brown-font">Project Files:</div>
+        <div><input type="text" class="medium-font" placeholder="Search for new tests to add ..." ng-change="tr.project.tests.search(tr.project.tests.to_search_for)" ng-model="tr.project.tests.to_search_for"></div>
+        <div class="clear-both button orange-bg white-font" ng-repeat="file in tr.project.tests.files_searched_for" ng-click="tr.project.addTest(file)">
+            <span>{{ file.relative_path }}</span>
+            <span class="pull-right"><i class="fa fa-plus"></i></span>
+        </div>
+    </div>
+  </div>
+  <div class="projects brown-bg white-font vc-font" ng-show="!tr.project.selected">
+      <div class="project tab" ng-repeat="p in tr.project.available" ng-click="tr.project.select(p.project)" ng-show="p.valid_base_path">
+        {{ p.project }}
+        </div>
+        <div class="project tab" ng-click="createProjectInit()">
+            <i class="fa fa-plus"></i>
+        </div>
+  </div>
+</div>

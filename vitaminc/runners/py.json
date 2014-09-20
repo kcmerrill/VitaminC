@@ -1,0 +1,10 @@
+{
+    "cmd":"python \"full_filename\" 2>&1",
+    "pass":"(OK)",
+    "fail": "(FAILED)(\\s+)(\\()(failures)",
+    "error_message": "File (.*?)---------",
+    "stats": {
+        "test_count": "Ran (\\d+) tests in"
+    }
+
+}
