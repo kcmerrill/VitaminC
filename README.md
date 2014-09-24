@@ -20,3 +20,9 @@ A quick youtube video providing a demo on it's use.
 
 ###Side Note
 It's an early version prototype that will have quite a few bugs. If you see any please feel free to do a PR and I'd be happy to merge them in. 
+
+###Installation Instructions
+- Either clone or download the Vitamin C repository to your machine where your code is located. 
+- Using composer(http://getcomposer.org) run composer.phar install in the root directory
+- Once the installation is completed, cd into the WWW directory and using php >= 5.4 built in webserver, run php -S localhost:9999
+- In a web browser, direct the url to http://localhost:9999
