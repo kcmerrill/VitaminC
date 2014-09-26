@@ -24,10 +24,7 @@ The results are a bar that is at the bottom of the page.
 ![Debug Mode](https://raw.githubusercontent.com/kcmerrill/VitaminC/master/vitaminc/demo/VitaminC_DebugMode.png)
 
 ######Side Note
-It's an early version prototype that will have quite a few bugs. If you see any please feel free to do a PR and I'd be happy to merge them in.
-
-###Side Note
-It's an early version prototype that will have quite a few bugs. If you see any please feel free to do a PR and I'd be happy to merge them in.
+It's an early version prototype that will have quite a few bugs. If you see any please feel free to do a PR and I'd be happy to merge them in. I realize the irony in that there are not tests as of yet. Because it's such an early versioned prototype, I'll be adding them sooner rather than later.
 
 ###Installation Instructions
 - Either clone or download the Vitamin C repository to your machine where your code is located.
