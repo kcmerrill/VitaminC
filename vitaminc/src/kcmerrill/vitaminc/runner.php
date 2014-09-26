@@ -50,15 +50,21 @@ class runner{
                 'assertion_count'=>0
             )
         );
-
         if(isset($this->path_info['extension']) && $this->load_runner($this->path_info['extension'])){
             $results['raw_output'] = shell_exec(strtr($this->runner['cmd'], $this->path_info));
             $results['cmd'] = strtr($this->runner['cmd'], $this->path_info);
             $results['pass'] = $this->text_matched($this->runner['pass'], $results['raw_output']);
             $results['fail'] = $this->text_matched($this->runner['fail'], $results['raw_output']);
             $results['error_message'] = $this->text_that_matched($this->runner['error_message'], $results['raw_output']);
-            $results['stats']['test_count'] = $this->numeric_matched($this->runner['stats']['test_count'], $results['raw_output']);
-            $results['stats']['assertion_count'] = $this->numeric_matched($this->runner['stats']['assertion_count'], $results['raw_output']);
+            if(isset($this->runner['stats'])){
+                $results['stats']['test_count'] = isset($this->runner['stats']['test_count']) ? $this->numeric_matched($this->runner['stats']['test_count'], $results['raw_output']) : 0;
+                $results['stats']['assertion_count'] = isset($this->runner['stats']['assertion_count']) ? $this->numeric_matched($this->runner['stats']['assertion_count'], $results['raw_output']) : 0;
+            } else {
+                $results['stats'] = array(
+                    'test_count'=>0,
+                    'assertion_count'=>0
+                );
+            }
         }
 
         return $results;
