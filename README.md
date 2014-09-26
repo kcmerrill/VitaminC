@@ -25,7 +25,7 @@ The results are a bar that is at the bottom of the page.
 
 ######Side Note
 It's an early version prototype that will have quite a few bugs. If you see any please feel free to do a PR and I'd be happy to merge them in.
-=======
+
 ###Side Note
 It's an early version prototype that will have quite a few bugs. If you see any please feel free to do a PR and I'd be happy to merge them in.
 
