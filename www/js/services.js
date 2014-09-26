@@ -14,7 +14,7 @@ angular.module('vitaminc.services', []).
         }
     };
   }).
-  factory('Tests', function($http, $timeout){
+  factory('Tests', function($http, $location, $timeout){
     return {
         files:[],
         ignore_files: [],
@@ -22,6 +22,7 @@ angular.module('vitaminc.services', []).
         assertion_count: 0,
         status: false,
         error_message: '',
+        raw_output: '',
         timer:false,
         project_name: false,
         files_searched_for: [],
@@ -72,6 +73,7 @@ angular.module('vitaminc.services', []).
            _.each(self.files, function(file, index){
                 self.test(index, file);
            });
+           $location.path('projects');
         },
         test: function(index, file){
             var self = this;
@@ -89,8 +91,10 @@ angular.module('vitaminc.services', []).
                 self.files[index].raw_output = data.raw_output;
                 if(!data.pass && !data.fail){
                     self.error_message = data.raw_output;
+                    self.raw_output = data.raw_output;
                 } else if (!data.pass) {
                     self.error_message = data.error_message;
+                    self.raw_output = data.raw_output;
                 }
                 self.test_count += data.stats.test_count;
                 self.assertion_count += data.stats.assertion_count;

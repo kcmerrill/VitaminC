@@ -22,7 +22,7 @@
     <div class="test-results {{ tr.project.tests.status == true || tr.project.tests.status == 'running' ? 'brown' : 'white' }}-font medium-font vc-font" ng-class="{'yellow-bg': tr.project.tests.status == 'running', 'green-bg': tr.project.tests.status == true, 'red-bg': tr.project.tests.status == false}" ng-controller="TestResultsCtrl" ng-show="tr.project.selected">
         <div class="tab" ng-show="tr.project.selected == false">Please select a project to run... </div>
         <div class="tab" ng-show="tr.project.tests.status == 'running'">Running tests ... </div>
-        <div class="tab" ng-show="tr.project.tests.status == false">{{ tr.project.tests.error_message }}</div>
+        <div class="tab" ng-show="tr.project.tests.status == false" ng-click='debug()'>{{ tr.project.tests.error_message }}</div>
         <div class="tab" ng-repeat="file in tr.project.tests.files" ng-show="tr.project.tests.status">{{ file.relative_path }}</div>
         <div class="tab pull-right" ng-show="tr.project.selected && tr.project.tests.status">{{ tr.project.tests.assertion_count }} Assertions</div>
         <div class="tab pull-right" ng-show="tr.project.selected && tr.project.tests.status">{{ tr.project.tests.test_count }} Tests</div>

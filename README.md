@@ -3,7 +3,7 @@ Vitamin C Test Runner
 
 A multi language test runner that supports php, python out of the box. Javascript will be coming soon. Because Vitamin C runs commands via the command line, adding your language of choice should be rather simple by simply adding another test runner.
 
-The results are a bar that is at the bottom of the page. 
+The results are a bar that is at the bottom of the page.
 
 - **Green Bar**
  - Indicates that all tests are passing
@@ -14,9 +14,14 @@ The results are a bar that is at the bottom of the page.
 
 
 ##How does it work?
-A quick youtube video providing a demo on it's use.
-[![Vitamin C in Action](https://raw.githubusercontent.com/kcmerrill/VitaminC/master/vitaminc/demo/Fullscreen_9_19_14__11_39_PM.png "Vitamin C in action!")] (https://www.youtube.com/watch?v=2L1LezvExL4)
+###Video Demo
+[![Vitamin C in Action](https://raw.githubusercontent.com/kcmerrill/VitaminC/master/vitaminc/demo/VitaminC_LiveMode.png)] (https://www.youtube.com/watch?v=2L1LezvExL4)
 
+###Project Mode
+![Project Mode](https://raw.githubusercontent.com/kcmerrill/VitaminC/master/vitaminc/demo/VitaminC_ProjectMode.png)
 
-###Side Note
-It's an early version prototype that will have quite a few bugs. If you see any please feel free to do a PR and I'd be happy to merge them in. 
+###Debug Mode
+![Debug Mode](https://raw.githubusercontent.com/kcmerrill/VitaminC/master/vitaminc/demo/VitaminC_DebugMode.png)
+
+######Side Note
+It's an early version prototype that will have quite a few bugs. If you see any please feel free to do a PR and I'd be happy to merge them in.

@@ -63,8 +63,21 @@ angular.module('vitaminc.controllers', []).
         $location.path('/load');
     }
   }).
-  controller('TestResultsCtrl', function($scope, TestRunner){
+  controller('TestResultsCtrl', function($scope, $location, TestRunner){
     $scope.tr = TestRunner;
+
+    $scope.projects = function(){
+        $location.path('projects');
+    };
+
+    $scope.debug = function(){
+        $location.path('debug');
+    };
+
+    /* Make sure we've loaded appropriatly */
+    if(!$scope.tr.ready){
+        $location.path('/load');
+    }
   }).
  controller('TestRunnerCtrl', function($location, $scope, TestRunner) {
     $scope.tr = TestRunner;

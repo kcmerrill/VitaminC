@@ -9,7 +9,7 @@ angular.module('vitaminc', [
 ]).
 config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/load', {templateUrl: 'partials/credits.html', controller: 'LoadCtrl'});
-  $routeProvider.when('/home', {templateUrl: 'partials/credits.html', controller: 'TestRunnerCtrl'});
+  $routeProvider.when('/debug', {templateUrl: 'partials/debug.html', controller: 'TestResultsCtrl'});
   $routeProvider.when('/projects', {templateUrl: 'partials/projects2.html', controller: 'ProjectsCtrl'});
   $routeProvider.otherwise({redirectTo: '/load'});
 }]);

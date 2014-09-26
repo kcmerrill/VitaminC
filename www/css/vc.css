@@ -179,6 +179,26 @@ html, body{
   opacity:1;
 }
 
+.debug-browser {
+    position:fixed;
+    bottom:0;
+    width:100%;
+    height:100%;
+    z-index:1000;
+}
+
+.debug-project{
+    height:100%;
+    width:100%;
+    overflow-y:auto;
+    padding-bottom:100px;
+}
+
+.debug-browser .close{
+    margin-top:15px;
+    margin-right:20px;
+}
+
 .project-browser {
     position:fixed;
     bottom:0;
