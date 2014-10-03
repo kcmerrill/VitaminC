@@ -73,7 +73,6 @@ angular.module('vitaminc.services', []).
            _.each(self.files, function(file, index){
                 self.test(index, file);
            });
-           $location.path('projects');
         },
         test: function(index, file){
             var self = this;
