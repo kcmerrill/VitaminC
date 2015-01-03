@@ -37,8 +37,14 @@ It's an early version prototype that will have quite a few bugs. If you see any 
 
 ##### Via docker
 - If you're a docker user, this is probably the easiest way, simply docker pull kcmerrill/vitaminc
-- For it's FIRST use, simply cd into your projects folder, or if you're like me and have a folder with a bunch of projects inside of it, cd to it and run: docker run -d -p 9999:9999 -v $PWD:/code --name vitaminc kcmerrill/vitaminc
-- For every use afterwards, simply run docker start vitaminc
+- For it's FIRST use, simply cd into your projects folder, or if you're like me and have a folder with a bunch of projects inside of it, cd to it and run: 
+```shell
+docker run -d -p 9999:9999 -v $PWD:/code --name vitaminc kcmerrill/vitaminc
+```
+- For every use afterwards, simply run:
+```shell
+docker start vitaminc
+```
 - In your browser, head over to http://192.168.59.103:9999/ to begin!
 * One quick note, the code will be volumune mounted under /code so use /code/foldernamehere in the project path.
 
