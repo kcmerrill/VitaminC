@@ -46,6 +46,6 @@ docker run -d -p 9999:9999 -v $PWD:/code --name vitaminc kcmerrill/vitaminc
 docker start vitaminc
 ```
 - In your browser, head over to http://192.168.59.103:9999/ to begin!
-* One quick note, the code will be volumune mounted under /code so use /code/foldernamehere in the project path.
+* One quick note, the code will be volume mounted under /code so use /code/foldernamehere in the project path.
 
 Of course if you have any questions, please feel free to email me. kcmerrill@gmail.com or leave me a comment.
