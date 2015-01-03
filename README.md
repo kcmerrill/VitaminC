@@ -27,7 +27,19 @@ The results are a bar that is at the bottom of the page.
 It's an early version prototype that will have quite a few bugs. If you see any please feel free to do a PR and I'd be happy to merge them in. I realize the irony in that there are not tests as of yet. Because it's such an early versioned prototype, I'll be adding them sooner rather than later.
 
 ###Installation Instructions
+
+##### Via composer
 - Either clone or download the Vitamin C repository to your machine where your code is located.
 - Using composer(http://getcomposer.org) run composer.phar install in the root directory
 - Once the installation is completed, cd into the WWW directory and using php >= 5.4 built in webserver, run php -S localhost:9999
 - In a web browser, direct the url to http://localhost:9999
+
+
+##### Via docker
+- If you're a docker user, this is probably the easiest way, simply docker pull kcmerrill/vitaminc
+- For it's FIRST use, simply cd into your projects folder, or if you're like me and have a folder with a bunch of projects inside of it, cd to it and run: docker run -d -p 9999:9999 -v $PWD:/code --name vitaminc kcmerrill/vitaminc
+- For every use afterwards, simply run docker start vitaminc
+- In your browser, head over to http://192.168.59.103:9999/ to begin!
+* One quick note, the code will be volumune mounted under /code so use /code/foldernamehere in the project path.
+
+Of course if you have any questions, please feel free to email me. kcmerrill@gmail.com or leave me a comment.
