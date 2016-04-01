@@ -7,7 +7,7 @@ $vitaminc->get('projects/', function() use($vitaminc){
     return $vitaminc->json(array_values($projects), 200);
 });
 
-$vitaminc->put('projects/{project}', function(Request $request, $project) use($vitaminc){
+$vitaminc->post('projects/{project}', function(Request $request, $project) use($vitaminc){
     $updated_project = json_decode($request->getContent(), TRUE);
     $updated_project_results = $vitaminc['projects']->update($project, $updated_project);
     return $vitaminc->json($updated_project_results, $updated_project_results ? 200 : 400);

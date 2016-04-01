@@ -10,7 +10,7 @@ date_default_timezone_set('America/Denver');
 define('APP_DIR', __DIR__ . '/');
 define('PROJECTS_DIR', APP_DIR . 'projects/');
 define('RUNNERS_DIR', APP_DIR . 'runners/');
-define('WWW_DIR', dirname(APP_DIR)  . '/www/');
+define('WWW_DIR', dirname(APP_DIR)  . '/html/');
 
 $vitaminc['projects'] = $vitaminc->share(function(){
     return new projects(PROJECTS_DIR);

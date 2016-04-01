@@ -33,6 +33,7 @@ class projects{
 
     function update($project_name, $updated_project){
         if(!is_array($updated_project)){
+            echo "not an array :(";
             return false;
         }
 

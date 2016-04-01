@@ -44,7 +44,7 @@ angular.module('vitaminc.services', []).
         },
         checkForModifications: function(project_name){
             var self = this;
-            $http.get('projects/' + project_name + '/files/modified/2secondsago').
+            $http.get('index.php/projects/' + project_name + '/files/modified/2secondsago').
             success(function(data){
                 $timeout.cancel(self.timer);
                 if(data.length){
@@ -77,7 +77,7 @@ angular.module('vitaminc.services', []).
         test: function(index, file){
             var self = this;
             self.files[index].status = 'running';
-            $http.get('/test?file=' + file.full_path).
+            $http.get('/index.php/test?file=' + file.full_path).
             success(function(data){
                 if(self.status == 'running'){
                     self.status = data.pass;
@@ -102,7 +102,7 @@ angular.module('vitaminc.services', []).
         search: function(query){
             var self = this;
             self.files_searched_for = [];
-            $http.get('projects/' + self.project_name + '/files/search?query=' + query).
+            $http.get('index.php/projects/' + self.project_name + '/files/search?query=' + query).
             success(function(data){
                 self.files_searched_for = data;
             });
@@ -128,7 +128,7 @@ angular.module('vitaminc.services', []).
         selected: false,
         init: function(success_callback){
            var self = this;
-           $http.get('/projects').success(function(data){
+           $http.get('index.php/projects').success(function(data){
                 self.available = data;
                 success_callback();
            });
@@ -165,14 +165,14 @@ angular.module('vitaminc.services', []).
         update: function(){
             var self = this;
             self.selected.tests = self.tests.files;
-            $http.put('/projects/' + self.selected.project, self.selected).
+            $http.post('index.php/projects/' + self.selected.project, self.selected).
             success(function(data){
                 self.available = data;
             });
         },
         createProject: function(){
             var self = this;
-            $http.put('/projects/' + self.selected.project, self.selected).
+            $http.post('index.php/projects/' + self.selected.project, self.selected).
             success(function(data){
                 self.available = data;
                 self.select(self.selected.project);
