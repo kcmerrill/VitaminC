@@ -39,7 +39,7 @@ It's an early version prototype that will have quite a few bugs. If you see any 
 - If you're a docker user, this is probably the easiest way, simply docker pull kcmerrill/vitaminc
 - For it's FIRST use, simply cd into your projects folder, or if you're like me and have a folder with a bunch of projects inside of it, cd to it and run: 
 ```shell
-docker run -d -p 9999:9999 -v $PWD:/$PWD --name vitaminc kcmerrill/vitaminc
+docker run -d -p 80:80 -v $PWD:/$PWD --name vitaminc kcmerrill/vitaminc
 ```
 - For every use afterwards, simply run:
 ```shell
